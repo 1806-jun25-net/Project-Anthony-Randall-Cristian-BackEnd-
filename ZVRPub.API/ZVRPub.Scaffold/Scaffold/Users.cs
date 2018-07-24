@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ZVRPub.API
+namespace ZVRPub.Scaffold
 {
     public partial class Users
     {
