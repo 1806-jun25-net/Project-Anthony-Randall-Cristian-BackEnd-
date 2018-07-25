@@ -10,5 +10,10 @@ namespace ZVRPub.Repository
 
         private readonly ZVRContext _db;
 
+        public ZVRPubRepository(ZVRContext db)
+        {
+            _db = db ?? throw new ArgumentNullException(nameof(db));
+        }
+
     }
 }
