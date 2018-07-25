@@ -4,18 +4,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ZVRPub.Scaffold;
 
 namespace ZVRPub.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/User")]
     [ApiController]
     public class UserController : ControllerBase
     {
+        private readonly ZVRContext context;
+
+        public UserController(ZVRContext context_)
+        {
+            context = context_;
+
+        }
         // GET: api/User
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult<List<Users>> GetAll()
         {
-            return new string[] { "value1", "value2" };
+            return context.Users.ToList();
         }
 
         // GET: api/User/5
