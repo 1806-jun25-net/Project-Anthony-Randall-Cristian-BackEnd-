@@ -41,12 +41,12 @@ namespace ZVRPub.Repository
             return LocationList;
         }
 
-        // public void AddLocation(Locations loc)
-        // {
-        //     var NewLocation = Mapper.Map(loc);
-        //     _db.Add(NewLocation);
-        //     _db.SaveChanges();
-        // }
+        //public void AddLocation(Locations loc)
+        //{
+        //    var NewLocation = Mapper.Map(loc);
+        //    _db.Add(NewLocation);
+        //    _db.SaveChanges();
+        //}
 
         //public Locations GetLocationById(int id)
         //{
@@ -73,11 +73,11 @@ namespace ZVRPub.Repository
             return OrderList;
         }
 
-        // public void AddOrder(Orders NewOrder)
-        // {
-        //     _db.Add(NewOrder);
-        //     _db.SaveChanges();
-        // }
+        public void AddOrder(Orders NewOrder)
+        {
+            _db.Add(NewOrder);
+            _db.SaveChanges();
+        }
 
         public IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationId(int id)
         {
@@ -85,10 +85,10 @@ namespace ZVRPub.Repository
             return InventoryList;
         }
 
-        // public void EditInventory(InventoryHasLocation inventory)
-        // {
-        //     _db.Update(inventory);
-        //     _db.SaveChanges();
-        // }
+        public void EditInventory(InventoryHasLocation inventory)
+        {
+            _db.Update(inventory);
+            _db.SaveChanges();
+        }
     }
 }
