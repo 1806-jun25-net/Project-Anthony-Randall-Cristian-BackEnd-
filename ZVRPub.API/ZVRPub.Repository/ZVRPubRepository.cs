@@ -23,17 +23,16 @@ namespace ZVRPub.Repository
             return UserList;
         }
 
-        //public void AddUser(Users user)
-        //{
-        //    var NewUser = Mapper.Map(user);
-        //    _db.Add(NewUser);
-        //    _db.SaveChanges();
-        //}
+        public async void AddUserAsync(Users user)
+        {
+            await _db.AddAsync(user);
+            await _db.SaveChangesAsync();
+        }
 
-        //public Users GetUserByUsername(string username)
-        //{
-        //    return Mapper.Map(_db.Users.AsNoTracking().First(u => u.Username.ToLower().Equals(username.ToLower())));
-        //}
+        public Users GetUserByUsername(string username)
+        {
+            return _db.Users.AsNoTracking().First(u => u.Username.ToLower().Equals(username.ToLower()));
+        }
 
         public IEnumerable<Locations> GetLocations()
         {
@@ -41,17 +40,16 @@ namespace ZVRPub.Repository
             return LocationList;
         }
 
-        //public void AddLocation(Locations loc)
-        //{
-        //    var NewLocation = Mapper.Map(loc);
-        //    _db.Add(NewLocation);
-        //    _db.SaveChanges();
-        //}
+        public async void AddLocationAsync(Locations loc)
+        {
+            await _db.AddAsync(loc);
+            await _db.SaveChangesAsync();
+        }
 
-        //public Locations GetLocationById(int id)
-        //{
-        //    return Mapper.Map(_db.Locations.AsNoTracking().First(l => l.Id == id);
-        //}
+        public Locations GetLocationById(int id)
+        {
+            return _db.Locations.AsNoTracking().First(l => l.Id == id);
+        }
 
         public IEnumerable<Orders> GetOrders()
         {
@@ -73,10 +71,10 @@ namespace ZVRPub.Repository
             return OrderList;
         }
 
-        public void AddOrder(Orders NewOrder)
+        public async void AddOrderAsync(Orders NewOrder)
         {
-            _db.Add(NewOrder);
-            _db.SaveChanges();
+            await _db.AddAsync(NewOrder);
+            await _db.SaveChangesAsync();
         }
 
         public IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationId(int id)
@@ -85,10 +83,10 @@ namespace ZVRPub.Repository
             return InventoryList;
         }
 
-        public void EditInventory(InventoryHasLocation inventory)
+        public async void EditInventoryAsync(InventoryHasLocation inventory)
         {
             _db.Update(inventory);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
         }
     }
 }
