@@ -9,4 +9,13 @@
     <Folder Include="BL\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ZVRPub.Scaffold\ZVRPub.Scaffold.csproj" />
+  </ItemGroup>
+
 </Project>
