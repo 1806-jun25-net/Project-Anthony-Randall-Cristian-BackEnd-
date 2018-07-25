@@ -210,6 +210,13 @@ namespace ZVRPub.Scaffold
                 entity.Property(e => e.UserPassword)
                     .IsRequired()
                     .HasMaxLength(50);
+
+                entity.HasOne(d => d.UsernameNavigation)
+                    .WithOne(p => p.UserLoginInfo)
+                    .HasPrincipalKey<Users>(p => p.Username)
+                    .HasForeignKey<UserLoginInfo>(d => d.Username)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Username");
             });
 
             modelBuilder.Entity<Users>(entity =>

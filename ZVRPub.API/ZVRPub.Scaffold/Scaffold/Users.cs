@@ -19,7 +19,9 @@ namespace ZVRPub.Scaffold
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string UserPic { get; set; }
+        public bool? LevelPermission { get; set; }
 
+        public UserLoginInfo UserLoginInfo { get; set; }
         public ICollection<Orders> Orders { get; set; }
     }
 }
