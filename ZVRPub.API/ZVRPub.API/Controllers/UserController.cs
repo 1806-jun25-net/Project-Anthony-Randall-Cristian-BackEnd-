@@ -29,15 +29,31 @@ namespace ZVRPub.API.Controllers
 
         // GET: api/User/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public ActionResult<Users> Get(string u)
         {
-            return "value";
+          
+            return Repo.GetUserByUsername(u);
         }
 
         // POST: api/User
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post(string un, string fn, string ln, DateTime dob, string UA, string PN, string Email, string pic, bool LP)
         {
+
+            var u = new Users
+            {
+                Username = un,
+                FirstName = fn,
+                DateOfBirth = dob,
+                Email = Email,
+                LastName = ln,
+                LevelPermission = false,
+                PhoneNumber = PN,
+                UserAddress = UA,
+                UserPic = pic,
+
+            };
+            Repo.AddUserAsync(u);
         }
 
         // PUT: api/User/5
