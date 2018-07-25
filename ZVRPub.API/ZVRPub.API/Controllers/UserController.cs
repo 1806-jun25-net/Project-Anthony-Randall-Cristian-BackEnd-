@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ZVRPub.Repository;
 using ZVRPub.Scaffold;
 
 namespace ZVRPub.API.Controllers
@@ -12,18 +13,18 @@ namespace ZVRPub.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly ZVRContext context;
+        private readonly ZVRPubRepository Repo;
 
-        public UserController(ZVRContext context_)
+        public UserController(ZVRPubRepository repo)
         {
-            context = context_;
+            Repo = repo;
 
         }
         // GET: api/User
         [HttpGet]
         public ActionResult<List<Users>> GetAll()
         {
-            return context.Users.ToList();
+            return Repo.GetUsers().ToList();
         }
 
         // GET: api/User/5
