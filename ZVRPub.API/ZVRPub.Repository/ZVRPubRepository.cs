@@ -31,14 +31,14 @@ namespace ZVRPub.Repository
             await _db.SaveChangesAsync();
 
         }
-        public async void Save()
+        public async Task Save()
         {
             await _db.SaveChangesAsync();
         }
 
-        public Users GetUserByUsername(string username)
+        public  Users GetUserByUsername(string username)
         {
-            return _db.Users.AsNoTracking().First(u => u.Username.ToLower().Equals(username.ToLower()));
+            return _db.Users.AsNoTracking().FirstOrDefault(u => u.Username.Equals(username));
         }
 
         #endregion
@@ -84,8 +84,11 @@ namespace ZVRPub.Repository
             List<Orders> OrderList = _db.Orders.AsNoTracking().Where(o => o.UserId == userId).ToList();
             return OrderList;
         }
-
-        public async void AddOrderAsync(Orders NewOrder)
+        //public Orders getOrdersById(int id)
+        //{
+           
+        //}
+        public async Task AddOrderAsync(Orders NewOrder)
         {
             await _db.AddAsync(NewOrder);
             await _db.SaveChangesAsync();
