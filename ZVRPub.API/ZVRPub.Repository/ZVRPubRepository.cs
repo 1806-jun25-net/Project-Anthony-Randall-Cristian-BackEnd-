@@ -17,6 +17,7 @@ namespace ZVRPub.Repository
             _db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
+        #region Users
         public IEnumerable<Users> GetUsers()
         {
             List<Users> UserList = _db.Users.AsNoTracking().ToList();
@@ -34,6 +35,10 @@ namespace ZVRPub.Repository
             return _db.Users.AsNoTracking().First(u => u.Username.ToLower().Equals(username.ToLower()));
         }
 
+        #endregion
+
+        #region Locations
+
         public IEnumerable<Locations> GetLocations()
         {
             List<Locations> LocationList = _db.Locations.AsNoTracking().ToList();
@@ -50,6 +55,9 @@ namespace ZVRPub.Repository
         {
             return _db.Locations.AsNoTracking().First(l => l.Id == id);
         }
+        #endregion
+
+        #region Orders
 
         public IEnumerable<Orders> GetOrders()
         {
@@ -77,6 +85,10 @@ namespace ZVRPub.Repository
             await _db.SaveChangesAsync();
         }
 
+        #endregion
+
+        #region InventoryHasLocation
+
         public IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationId(int id)
         {
             List<InventoryHasLocation> InventoryList = _db.InventoryHasLocation.AsNoTracking().Where(i => i.LocationId == id).ToList();
@@ -88,5 +100,61 @@ namespace ZVRPub.Repository
             _db.Update(inventory);
             await _db.SaveChangesAsync();
         }
+
+
+        #endregion
+
+        #region Inventory
+
+        //Inventory Table.
+        public IEnumerable<Inventory> GetInventories()
+        {
+            List<Inventory> InventoryList = _db.Inventory.AsNoTracking().ToList();
+            return InventoryList;
+        }
+        //Inventory SaveChanges.
+        public async void AddInventoryItem(Inventory NewItem)
+        {
+            await _db.AddAsync(NewItem);
+            await _db.SaveChangesAsync();
+        }
+
+        #endregion
+
+        #region LocationOrderProcess
+
+        #endregion
+
+        #region MenuCustom
+
+        #endregion
+
+        #region MenuCustomHasInventory
+
+        #endregion
+
+        #region MenuPreBuilt
+
+        #endregion
+
+        #region MenuPreBuiltHasInventory
+
+        #endregion
+
+        #region MenuPreBuiltHasOrders
+
+        #endregion
+
+        #region UserLogInfo
+
+        #endregion
+
+
+
+
+
+
+
+
     }
 }
