@@ -38,7 +38,7 @@ namespace ZVRPub.Repository
 
         public Users GetUserByUsername(string username)
         {
-            return _db.Users.AsNoTracking().First(u => u.Username.ToLower().Equals(username.ToLower()));
+            return _db.Users.AsNoTracking().FirstOrDefault(u => u.Username.ToLower().Equals(username.ToLower()));
         }
 
         #endregion
@@ -148,10 +148,6 @@ namespace ZVRPub.Repository
         #endregion
 
         #region MenuPreBuiltHasOrders
-
-        #endregion
-
-        #region UserLogInfo
 
         #endregion
 
