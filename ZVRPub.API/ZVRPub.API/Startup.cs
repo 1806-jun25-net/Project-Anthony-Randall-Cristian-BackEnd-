@@ -31,6 +31,15 @@ namespace ZVRPub.API
         {
             services.AddScoped<ZVRPubRepository>();
             services.AddDbContext<ZVRContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("ZVRPubConnection")));
+            services.AddDbContext<IdentityDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("ZVRPubIdentity"),
+                    b => b.MigrationsAssembly("ZVRPub.API")));
+
+            // Add-Migration <migration-name> -Context TodoContext
+            // Update-Database -Context TodoContext
+
+            // Add-Migration ZVRPubAuthenticationDB -Context IdentityDbContext
+            // Update-Database -Context IdentityDbContext
 
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
