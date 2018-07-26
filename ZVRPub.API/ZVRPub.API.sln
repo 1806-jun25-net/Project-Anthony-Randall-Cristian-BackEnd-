@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZVRPub.Library", "ZVRPub.Li
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZVRPub.Repository", "ZVRPub.Repository\ZVRPub.Repository.csproj", "{29BAE98A-37B7-42FE-BB50-1FD8FABB763E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestZVRPub.API", "XUnitTestZVRPub.API\XUnitTestZVRPub.API.csproj", "{3DC8ACC0-06CF-4354-9816-89A5A88E70F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XUnitTestZVRPub.API", "XUnitTestZVRPub.API\XUnitTestZVRPub.API.csproj", "{3DC8ACC0-06CF-4354-9816-89A5A88E70F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
