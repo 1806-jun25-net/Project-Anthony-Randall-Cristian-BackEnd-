@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using ZVRPub.Scaffold;
 
 namespace ZVRPub.Repository
@@ -24,9 +25,14 @@ namespace ZVRPub.Repository
             return UserList;
         }
 
-        public async void AddUserAsync(Users user)
+        public async Task AddUserAsync(Users user)
         {
             await _db.AddAsync(user);
+            await _db.SaveChangesAsync();
+
+        }
+        public async void Save()
+        {
             await _db.SaveChangesAsync();
         }
 
