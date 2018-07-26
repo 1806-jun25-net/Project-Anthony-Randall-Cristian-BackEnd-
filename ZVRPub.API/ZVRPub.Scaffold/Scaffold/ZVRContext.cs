@@ -25,12 +25,15 @@ namespace ZVRPub.Scaffold
         public virtual DbSet<MenuPreBuiltHasInventory> MenuPreBuiltHasInventory { get; set; }
         public virtual DbSet<MenuPrebuiltHasOrders> MenuPrebuiltHasOrders { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
-        public virtual DbSet<UserLoginInfo> UserLoginInfo { get; set; }
         public virtual DbSet<Users> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=tcp:valentin-quinones-1806.database.windows.net,1433;Initial Catalog=ZVR;Persist Security Info=False;User ID=NinjaUltraStar;Password=Number39@#;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -195,28 +198,6 @@ namespace ZVRPub.Scaffold
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UserId");
-            });
-
-            modelBuilder.Entity<UserLoginInfo>(entity =>
-            {
-                entity.HasKey(e => e.Username);
-
-                entity.ToTable("UserLoginInfo", "ZRV_Pub");
-
-                entity.Property(e => e.Username)
-                    .HasMaxLength(50)
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.UserPassword)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.HasOne(d => d.UsernameNavigation)
-                    .WithOne(p => p.UserLoginInfo)
-                    .HasPrincipalKey<Users>(p => p.Username)
-                    .HasForeignKey<UserLoginInfo>(d => d.Username)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Username");
             });
 
             modelBuilder.Entity<Users>(entity =>

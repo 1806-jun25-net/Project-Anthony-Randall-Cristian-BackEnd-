@@ -21,7 +21,6 @@ namespace ZVRPub.Scaffold
         public string UserPic { get; set; }
         public bool? LevelPermission { get; set; }
 
-        public UserLoginInfo UserLoginInfo { get; set; }
         public ICollection<Orders> Orders { get; set; }
     }
 }
