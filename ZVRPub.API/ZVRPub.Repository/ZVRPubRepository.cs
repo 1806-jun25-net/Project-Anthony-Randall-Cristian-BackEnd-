@@ -37,7 +37,7 @@ namespace ZVRPub.Repository
                 Console.WriteLine(ex);
             }
         }
-        public async void Save()
+        public async Task Save()
         {
             await _db.SaveChangesAsync();
         }

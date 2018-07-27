@@ -52,7 +52,7 @@ namespace ZVRPub.API.Controllers
                 LocationId = orders.LocationId, 
                 OrderTime = DateTime.Now, 
             };
-            await Repo.AddOrderAsync(o);
+            //await Repo.AddOrderAsync(o);
 
         }
 
