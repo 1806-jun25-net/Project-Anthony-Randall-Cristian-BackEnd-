@@ -5,6 +5,7 @@ namespace ZVRPub.Scaffold
 {
     public partial class Orders
     {
+       
         public Orders()
         {
             LocationOrderProcess = new HashSet<LocationOrderProcess>();
@@ -13,7 +14,7 @@ namespace ZVRPub.Scaffold
         }
 
         public int OrderId { get; set; }
-        public DateTime OrderTime { get; set; }
+        public DateTime OrderTime { get; set; } = DateTime.Now;
         public int LocationId { get; set; }
         public int UserId { get; set; }
 

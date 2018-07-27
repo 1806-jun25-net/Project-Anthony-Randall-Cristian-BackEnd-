@@ -48,7 +48,7 @@ namespace ZVRPub.Repository
         }
 
         #endregion
-
+      
         #region Locations
 
         public IEnumerable<Locations> GetLocations()
@@ -65,7 +65,7 @@ namespace ZVRPub.Repository
 
         public Locations GetLocationById(int id)
         {
-            return _db.Locations.AsNoTracking().First(l => l.Id == id);
+            return _db.Locations.AsNoTracking().FirstOrDefault(l => l.Id == id);
         }
         #endregion
 
@@ -76,7 +76,11 @@ namespace ZVRPub.Repository
             List<Orders> OrderList = _db.Orders.AsNoTracking().ToList();
             return OrderList;
         }
-
+        public Orders FindOrdersByDate(DateTime DO)
+        {
+            var date = GetOrders().FirstOrDefault(x => x.OrderTime.Equals(DO));
+            return date;
+        }
         public IEnumerable<Orders> GetOrdersByLocation(int id)
         {
             List<Orders> OrderList = _db.Orders.AsNoTracking().Where(o => o.LocationId == id).ToList();
@@ -91,8 +95,10 @@ namespace ZVRPub.Repository
             return OrderList;
         }
 
-        public async void AddOrderAsync(Orders NewOrder)
+        public async Task AddOrderAsync(Orders NewOrder)
         {
+            
+            
             await _db.AddAsync(NewOrder);
             await _db.SaveChangesAsync();
         }
@@ -101,6 +107,10 @@ namespace ZVRPub.Repository
 
         #region InventoryHasLocation
 
+        public IEnumerable<InventoryHasLocation> getLocationInv()
+        {
+            return _db.InventoryHasLocation.AsNoTracking();
+        }
         public IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationId(int id)
         {
             List<InventoryHasLocation> InventoryList = _db.InventoryHasLocation.AsNoTracking().Where(i => i.LocationId == id).ToList();
@@ -134,7 +144,10 @@ namespace ZVRPub.Repository
         #endregion
 
         #region LocationOrderProcess
-
+        public IEnumerable<LocationOrderProcess> GetOrderProcesses()
+        {
+            return _db.LocationOrderProcess.AsNoTracking();
+        }
         #endregion
 
         #region MenuCustom
@@ -154,7 +167,19 @@ namespace ZVRPub.Repository
         #endregion
 
         #region MenuPreBuiltHasOrders
+        
+        public async Task addPreMenuOrder(int OrderId, int MenuPreId)
+        {
 
+            var mo = new MenuPrebuiltHasOrders()
+            {
+                OrdersId = OrderId,
+                MenuPreBuildId = MenuPreId
+            };
+            await _db.AddAsync(mo);
+            await _db.SaveChangesAsync();
+        }
+        
         #endregion
 
 
