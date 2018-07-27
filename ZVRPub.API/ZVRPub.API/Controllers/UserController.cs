@@ -33,9 +33,8 @@ namespace ZVRPub.API.Controllers
         [HttpGet("{id}", Name = "GetUser")]
         public ActionResult<Users> Get(string u)
         {
-          
-            return Repo.GetUserByUsername(u);
-      }
+           return Repo.GetUserByUsername(u);
+        }
 
         // POST: api/User
         [HttpPost]

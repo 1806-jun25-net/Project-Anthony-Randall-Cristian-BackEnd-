@@ -56,7 +56,48 @@ namespace XUnitTestZVRPub.API
 
             Assert.Same(user1, result.Value[0]);
             Assert.Same(user2, result.Value[1]);
+        }
 
+        [Fact]
+        public void UserControllerShouldBeAbleToGetUserByUsername()
+        {
+            Users user1 = new Users
+            {
+                Username = "Test",
+                FirstName = "Mick",
+                LastName = "Tester",
+                DateOfBirth = DateTime.Now,
+                PhoneNumber = "0123456789",
+                Email = "a@b.com",
+                UserAddress = "123 Anystreet, Herndon",
+                LevelPermission = true,
+                UserPic = "admin.png",
+                UserId = 1
+            };
+            var user2 = new Users
+            {
+                Username = "Test2",
+                FirstName = "Nick",
+                LastName = "Escalona",
+                DateOfBirth = DateTime.Now,
+                PhoneNumber = "0987654321",
+                Email = "nick@escalona.com",
+                UserAddress = "321 Nothere, Reston",
+                LevelPermission = false,
+                UserPic = null,
+                UserId = 2
+            };
+
+            string username = "Test2";
+            var repoMock = new Mock<IZVRPubRepository>();
+            repoMock.Setup(c => c.GetUserByUsername(username)).Returns(user2);
+
+            var controller = new UserController(repoMock.Object);
+            var result = controller.Get(username);
+
+            Assert.NotNull(result.Value);
+
+            Assert.Same(user2, result.Value);
         }
     }
 }
