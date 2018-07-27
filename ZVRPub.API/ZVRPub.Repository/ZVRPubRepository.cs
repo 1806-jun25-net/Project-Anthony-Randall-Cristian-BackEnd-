@@ -27,9 +27,15 @@ namespace ZVRPub.Repository
 
         public async Task AddUserAsync(Users user)
         {
-            await _db.AddAsync(user);
-            await _db.SaveChangesAsync();
-
+            try
+            {
+                await _db.AddAsync(user);
+                await _db.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
         public async void Save()
         {
