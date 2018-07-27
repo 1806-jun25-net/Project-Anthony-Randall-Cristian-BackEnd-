@@ -14,10 +14,10 @@ namespace ZVRPub.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly ZVRPubRepository Repo;
+        private readonly IZVRPubRepository Repo;
         private SignInManager<IdentityUser> _signInManager { get; }
         
-        public UserController(ZVRPubRepository repo)
+        public UserController(IZVRPubRepository repo)
         {
             Repo = repo;
 
