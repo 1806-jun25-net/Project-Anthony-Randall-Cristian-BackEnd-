@@ -37,24 +37,29 @@ namespace ZVRPub.API.Controllers
 
         // POST: api/User
         [HttpPost]
-        public async Task Post(Users user)
+        public async Task<ActionResult<User>> Post(AllUserInfo NewUser)
         {
-
-            var u = new Users
+            var u = new User
             {
-                Username = user.Username,
-                FirstName = user.FirstName,
-                DateOfBirth = user.DateOfBirth,
-                Email = user.Email,
-                LastName = user.LastName,
-                LevelPermission = false,
-                PhoneNumber = user.PhoneNumber,
-                UserAddress = user.UserAddress,
-                UserPic = user.UserPic,
-
+                Username = NewUser.Username,
+                Password = NewUser.Password
             };
-           await Repo.AddUserAsync(user);
-           //Repo.Save();
+
+            Users user = new Users
+            {
+                Username = NewUser.Username,
+                FirstName = NewUser.FirstName,
+                LastName = NewUser.LastName,
+                DateOfBirth = NewUser.DateOfBirth,
+                UserAddress = NewUser.UserAddress,
+                PhoneNumber = NewUser.PhoneNumber,
+                Email = NewUser.Email,
+                LevelPermission = false,
+                UserPic = NewUser.UserPic
+            };
+            await Repo.AddUserAsync(user);
+
+            return RedirectToAction("Register", "Account");
         }
 
         // PUT: api/User/5

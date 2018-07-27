@@ -27,18 +27,24 @@ namespace ZVRPub.Repository
 
         public async Task AddUserAsync(Users user)
         {
-            await _db.AddAsync(user);
-            await _db.SaveChangesAsync();
-
+            try
+            {
+                await _db.AddAsync(user);
+                await _db.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
-        public async Task Save()
+        public async void Save()
         {
             await _db.SaveChangesAsync();
         }
 
-        public  Users GetUserByUsername(string username)
+        public Users GetUserByUsername(string username)
         {
-            return _db.Users.AsNoTracking().FirstOrDefault(u => u.Username.Equals(username));
+            return _db.Users.AsNoTracking().FirstOrDefault(u => u.Username.ToLower().Equals(username.ToLower()));
         }
 
         #endregion
@@ -84,11 +90,8 @@ namespace ZVRPub.Repository
             List<Orders> OrderList = _db.Orders.AsNoTracking().Where(o => o.UserId == userId).ToList();
             return OrderList;
         }
-        //public Orders getOrdersById(int id)
-        //{
-           
-        //}
-        public async Task AddOrderAsync(Orders NewOrder)
+
+        public async void AddOrderAsync(Orders NewOrder)
         {
             await _db.AddAsync(NewOrder);
             await _db.SaveChangesAsync();
@@ -151,10 +154,6 @@ namespace ZVRPub.Repository
         #endregion
 
         #region MenuPreBuiltHasOrders
-
-        #endregion
-
-        #region UserLogInfo
 
         #endregion
 
