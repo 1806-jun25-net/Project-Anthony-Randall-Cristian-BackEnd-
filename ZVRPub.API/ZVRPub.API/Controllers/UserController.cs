@@ -67,12 +67,14 @@ namespace ZVRPub.API.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
+            //unused due to lack of need for this functionality
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            //unused due to lack of need for this functionality
         }
     }
 }
