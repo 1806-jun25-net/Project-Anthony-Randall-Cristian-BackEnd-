@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ZVRPub.Repository;
 using ZVRPub.Scaffold;
@@ -14,7 +15,8 @@ namespace ZVRPub.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly ZVRPubRepository Repo;
-
+        private SignInManager<IdentityUser> _signInManager { get; }
+        
         public UserController(ZVRPubRepository repo)
         {
             Repo = repo;
@@ -33,7 +35,7 @@ namespace ZVRPub.API.Controllers
         {
           
             return Repo.GetUserByUsername(u);
-        }
+      }
 
         // POST: api/User
         [HttpPost]
@@ -59,7 +61,7 @@ namespace ZVRPub.API.Controllers
             };
             await Repo.AddUserAsync(user);
 
-            return RedirectToAction("Register", "Account");
+            return NoContent();
         }
 
         // PUT: api/User/5

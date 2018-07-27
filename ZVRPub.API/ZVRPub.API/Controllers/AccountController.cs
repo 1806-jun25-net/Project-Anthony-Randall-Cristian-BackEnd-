@@ -8,8 +8,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ZVRPub.API;
+using ZVRPub.Repository;
+using ZVRPub.Scaffold;
 
-namespace TodoApi2.Controllers
+namespace ZVRPub.API.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -17,9 +19,13 @@ namespace TodoApi2.Controllers
     {
         private SignInManager<IdentityUser> _signInManager { get; }
 
-        public AccountController(SignInManager<IdentityUser> signInManager)
+        private readonly ZVRPubRepository Repo;
+
+
+        public AccountController(SignInManager<IdentityUser> signInManager, ZVRPubRepository repo)
         {
             _signInManager = signInManager;
+            Repo = repo;
         }
 
         [HttpPost]
@@ -50,7 +56,7 @@ namespace TodoApi2.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public async Task<ActionResult> Register(User input,
+        public async Task<ActionResult> Register(AllUserInfo input,
             [FromServices] UserManager<IdentityUser> userManager,
             [FromServices] RoleManager<IdentityRole> roleManager, bool admin = false)
         {
@@ -85,6 +91,20 @@ namespace TodoApi2.Controllers
             }
 
             await _signInManager.SignInAsync(user, isPersistent: false);
+
+            Users u = new Users
+            {
+                Username = input.Username,
+                FirstName = input.FirstName,
+                LastName = input.LastName,
+                DateOfBirth = input.DateOfBirth,
+                UserAddress = input.UserAddress,
+                PhoneNumber = input.PhoneNumber,
+                Email = input.Email,
+                LevelPermission = false,
+                UserPic = input.UserPic
+            };
+            await Repo.AddUserAsync(u);
 
             return NoContent();
         }
