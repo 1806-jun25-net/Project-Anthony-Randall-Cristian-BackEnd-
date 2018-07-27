@@ -8,6 +8,7 @@ using ZVRPub.Scaffold;
 
 namespace ZVRPub.Repository
 {
+
     public class ZVRPubRepository : IZVRPubRepository
     {
 
@@ -194,7 +195,17 @@ namespace ZVRPub.Repository
             await _db.AddAsync(mo);
             await _db.SaveChangesAsync();
         }
-        
+
+        void IZVRPubRepository.AddOrderAsync(Orders NewOrder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Save()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
 
