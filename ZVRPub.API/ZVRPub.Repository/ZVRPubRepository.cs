@@ -8,7 +8,7 @@ using ZVRPub.Scaffold;
 
 namespace ZVRPub.Repository
 {
-    public class ZVRPubRepository
+    public class ZVRPubRepository : IZVRPubRepository
     {
 
         private readonly ZVRContext _db;
