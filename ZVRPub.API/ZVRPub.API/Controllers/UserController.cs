@@ -66,8 +66,11 @@ namespace ZVRPub.API.Controllers
 
         // PUT: api/User/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<Action<User>> Put(User u)
         {
+            await Repo.;
+
+
         }
 
         // DELETE: api/ApiWithActions/5

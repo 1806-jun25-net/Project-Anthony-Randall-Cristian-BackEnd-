@@ -37,9 +37,20 @@ namespace ZVRPub.Repository
                 Console.WriteLine(ex);
             }
         }
-        public async Task Save()
+
+        public async Task UpdateUser(Users u)
         {
-            await _db.SaveChangesAsync();
+          
+           var fn = GetUserByUsername(u.Username);
+            
+            
+            if(fn != null)
+            {
+                _db.Update(u);
+               await _db.SaveChangesAsync();
+            }
+           
+           
         }
 
         public Users GetUserByUsername(string username)
