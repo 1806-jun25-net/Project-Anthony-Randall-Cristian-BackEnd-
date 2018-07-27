@@ -134,6 +134,10 @@ namespace ZVRPub.Repository
             List<Inventory> InventoryList = _db.Inventory.AsNoTracking().ToList();
             return InventoryList;
         }
+        public Inventory GetInventoriesByName(string ingredient)
+        {
+            return _db.Inventory.AsNoTracking().FirstOrDefault(u => u.IngredientName.ToLower().Equals(ingredient.ToLower()));
+        }
         //Inventory SaveChanges.
         public async void AddInventoryItem(Inventory NewItem)
         {

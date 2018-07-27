@@ -30,7 +30,7 @@ namespace ZVRPub.API.Controllers
         }
 
         // GET: api/User/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}", Name = "GetUser")]
         public ActionResult<Users> Get(string u)
         {
           
