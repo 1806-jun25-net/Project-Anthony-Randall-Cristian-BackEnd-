@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ZVRPub.Repository;
 using ZVRPub.Scaffold;
@@ -14,7 +15,8 @@ namespace ZVRPub.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly ZVRPubRepository Repo;
-
+        private SignInManager<IdentityUser> _signInManager { get; }
+        
         public UserController(ZVRPubRepository repo)
         {
             Repo = repo;
@@ -33,28 +35,33 @@ namespace ZVRPub.API.Controllers
         {
           
             return Repo.GetUserByUsername(u);
-        }
+      }
 
         // POST: api/User
         [HttpPost]
-        public async Task Post(Users user)
+        public async Task<ActionResult<User>> Post(AllUserInfo NewUser)
         {
-
-            var u = new Users
+            var u = new User
             {
-                Username = user.Username,
-                FirstName = user.FirstName,
-                DateOfBirth = user.DateOfBirth,
-                Email = user.Email,
-                LastName = user.LastName,
-                LevelPermission = false,
-                PhoneNumber = user.PhoneNumber,
-                UserAddress = user.UserAddress,
-                UserPic = user.UserPic,
-
+                Username = NewUser.Username,
+                Password = NewUser.Password
             };
-           await Repo.AddUserAsync(user);
-           //Repo.Save();
+
+            Users user = new Users
+            {
+                Username = NewUser.Username,
+                FirstName = NewUser.FirstName,
+                LastName = NewUser.LastName,
+                DateOfBirth = NewUser.DateOfBirth,
+                UserAddress = NewUser.UserAddress,
+                PhoneNumber = NewUser.PhoneNumber,
+                Email = NewUser.Email,
+                LevelPermission = false,
+                UserPic = NewUser.UserPic
+            };
+            await Repo.AddUserAsync(user);
+
+            return NoContent();
         }
 
         // PUT: api/User/5
