@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NLog;
 using ZVRPub.Repository;
 using ZVRPub.Scaffold;
 
@@ -19,8 +20,11 @@ namespace ZVRPub.API
 {
     public class Startup
     {
+        private static readonly Logger log = LogManager.GetCurrentClassLogger();
+
         public Startup(IConfiguration configuration)
         {
+            log.Info("Starting configuration");
             Configuration = configuration;
         }
 
@@ -29,8 +33,14 @@ namespace ZVRPub.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            log.Info("Beginning registration");
+            log.Info("Registering repository");
             services.AddScoped<IZVRPubRepository, ZVRPubRepository>();
+
+            log.Info("Registering first db context");
             services.AddDbContext<ZVRContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("ZVRPubConnection")));
+
+            log.Info("Registering identity db context");
             services.AddDbContext<IdentityDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ZVRPubIdentity"),
                     b => b.MigrationsAssembly("ZVRPub.API")));
@@ -41,6 +51,7 @@ namespace ZVRPub.API
             // Add-Migration ZVRPubAuthenticationDB -Context IdentityDbContext
             // Update-Database -Context IdentityDbContext
 
+            log.Info("Registering options required for identity functionality");
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
                 // Password settings (defaults - optional)
@@ -59,6 +70,7 @@ namespace ZVRPub.API
             })
                 .AddEntityFrameworkStores<IdentityDbContext>();
 
+            log.Info("Registering cookie for login information storage");
             services.ConfigureApplicationCookie(options =>
             {
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
@@ -75,11 +87,14 @@ namespace ZVRPub.API
             services.AddAuthentication();
 
             services.AddMvc().AddXmlSerializerFormatters().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_1);
+
+            log.Info("Registering swagger UI");
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "My API", Version = "v1" });
             });
 
+            log.Info("Registering identity db context");
             services.AddDbContext<IdentityDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("TodoApiAuthDB"),
                     b => b.MigrationsAssembly("ZVRPub.API")));
@@ -88,6 +103,7 @@ namespace ZVRPub.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            log.Info("Configuring settings for swagger UI");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
