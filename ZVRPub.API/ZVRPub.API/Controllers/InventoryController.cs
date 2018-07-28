@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NLog;
 using ZVRPub.Repository;
 using ZVRPub.Scaffold;
 
@@ -13,12 +14,14 @@ namespace ZVRPub.API.Controllers
     [ApiController]
     public class InventoryController : ControllerBase
     {
-        private readonly ZVRPubRepository Repo;
+        private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
-        public InventoryController(ZVRPubRepository repo)
+        private readonly IZVRPubRepository Repo;
+
+        public InventoryController(IZVRPubRepository repo)
         {
+            log.Info("Creating instance of inventory controller");
             Repo = repo;
-
         }
 
 
@@ -26,6 +29,7 @@ namespace ZVRPub.API.Controllers
         [HttpGet]
         public ActionResult<List<Inventory>> GetAll()
         {
+            log.Info("Retreiving all inventories from database");
             return Repo.GetInventories().ToList();
         }
 
@@ -33,6 +37,7 @@ namespace ZVRPub.API.Controllers
         [HttpGet("{id}", Name = "GetInventory")]
         public ActionResult<Inventory> Get(string name)
         {
+            log.Info("Retreiving inventory from database based on ingredient name");
             return Repo.GetInventoriesByName(name);
         }
 
@@ -41,18 +46,21 @@ namespace ZVRPub.API.Controllers
         [HttpPost]
         public void Post([FromBody] string value)
         {
+            log.Info("Creating new inventory");
         }
 
         // PUT: api/Inventory/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
+            log.Info("Updating inventory information");
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            log.Info("Deleting inventory with given id");
         }
     }
 }
