@@ -13,9 +13,9 @@ namespace ZVRPub.API.Controllers
     [ApiController]
     public class InventoryController : ControllerBase
     {
-        private readonly ZVRPubRepository Repo;
+        private readonly IZVRPubRepository Repo;
 
-        public InventoryController(ZVRPubRepository repo)
+        public InventoryController(IZVRPubRepository repo)
         {
             Repo = repo;
 
