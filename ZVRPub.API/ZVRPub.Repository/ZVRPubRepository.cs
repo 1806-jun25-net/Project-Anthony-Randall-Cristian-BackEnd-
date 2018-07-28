@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,16 +13,20 @@ namespace ZVRPub.Repository
     {
 
         private readonly ZVRContext _db;
+        private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
         public ZVRPubRepository(ZVRContext db)
         {
+            log.Info("Creating instance of ZVR repository");
             _db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
         #region Users
         public IEnumerable<Users> GetUsers()
         {
+            log.Info("Obtaining all users from database");
             List<Users> UserList = _db.Users.AsNoTracking().ToList();
+            log.Info("Users obtained");
             return UserList;
         }
 
@@ -29,12 +34,16 @@ namespace ZVRPub.Repository
         {
             try
             {
+                log.Info("Attempting to add user to database");
                 await _db.AddAsync(user);
                 await _db.SaveChangesAsync();
+                log.Info("User added to database");
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex);
+                log.Info("Exception thrown");
+                log.Info(ex.Message);
+                log.Info(ex.StackTrace);
             }
         }
         public async void Save()
@@ -44,6 +53,7 @@ namespace ZVRPub.Repository
 
         public Users GetUserByUsername(string username)
         {
+            log.Info("Retreiving user from database with given username");
             return _db.Users.AsNoTracking().FirstOrDefault(u => u.Username.ToLower().Equals(username.ToLower()));
         }
 
@@ -53,18 +63,32 @@ namespace ZVRPub.Repository
 
         public IEnumerable<Locations> GetLocations()
         {
+            log.Info("Obtaining all locations from database");
             List<Locations> LocationList = _db.Locations.AsNoTracking().ToList();
+            log.Info("All locations obtained");
             return LocationList;
         }
 
         public async void AddLocationAsync(Locations loc)
         {
-            await _db.AddAsync(loc);
-            await _db.SaveChangesAsync();
+            try
+            {
+                log.Info("Attempting to add location to database");
+                await _db.AddAsync(loc);
+                await _db.SaveChangesAsync();
+            }
+            
+            catch(Exception ex)
+            {
+                log.Info("Exception thrown");
+                log.Info(ex.Message);
+                log.Info(ex.StackTrace);
+            }
         }
 
         public Locations GetLocationById(int id)
         {
+            log.Info("Obtaining single location from location id");
             return _db.Locations.AsNoTracking().First(l => l.Id == id);
         }
         #endregion
@@ -73,28 +97,46 @@ namespace ZVRPub.Repository
 
         public IEnumerable<Orders> GetOrders()
         {
+            log.Info("Obtaining all saved orders from database");
             List<Orders> OrderList = _db.Orders.AsNoTracking().ToList();
+            log.Info("Orders retreived");
             return OrderList;
         }
 
         public IEnumerable<Orders> GetOrdersByLocation(int id)
         {
+            log.Info("Obtaining orders from provided location");
             List<Orders> OrderList = _db.Orders.AsNoTracking().Where(o => o.LocationId == id).ToList();
+            log.Info("Orders obtained");
             return OrderList;
         }
 
         public IEnumerable<Orders> GetOrdersByUsername(string user)
         {
+            log.Info("Obtaining orders ordered by given user");
             var CurrentUser = _db.Users.AsNoTracking().First(u => u.Username.ToLower().Equals(user.ToLower()));
             var userId = CurrentUser.UserId;
             List<Orders> OrderList = _db.Orders.AsNoTracking().Where(o => o.UserId == userId).ToList();
+            log.Info("Orders obtained");
             return OrderList;
         }
 
         public async void AddOrderAsync(Orders NewOrder)
         {
-            await _db.AddAsync(NewOrder);
-            await _db.SaveChangesAsync();
+            try
+            {
+                log.Info("Attempting to add new order");
+                await _db.AddAsync(NewOrder);
+                await _db.SaveChangesAsync();
+                log.Info("Order added");
+            }
+
+            catch(Exception ex)
+            {
+                log.Info("Exception thrown");
+                log.Info(ex.Message);
+                log.Info(ex.StackTrace);
+            }
         }
 
         #endregion
@@ -103,14 +145,28 @@ namespace ZVRPub.Repository
 
         public IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationId(int id)
         {
+            log.Info("Attempting to get inventory by location id");
             List<InventoryHasLocation> InventoryList = _db.InventoryHasLocation.AsNoTracking().Where(i => i.LocationId == id).ToList();
+            log.Info("Inventory retreived");
             return InventoryList;
         }
 
         public async void EditInventoryAsync(InventoryHasLocation inventory)
         {
-            _db.Update(inventory);
-            await _db.SaveChangesAsync();
+            try
+            {
+                log.Info("Attempting to edit inventory");
+                _db.Update(inventory);
+                await _db.SaveChangesAsync();
+                log.Info("Inventory updated");
+            }
+            
+            catch(Exception ex)
+            {
+                log.Info("Exception thrown");
+                log.Info(ex.Message);
+                log.Info(ex.StackTrace);
+            }
         }
 
 
@@ -121,18 +177,33 @@ namespace ZVRPub.Repository
         //Inventory Table.
         public IEnumerable<Inventory> GetInventories()
         {
+            log.Info("Obtaining inventories from db");
             List<Inventory> InventoryList = _db.Inventory.AsNoTracking().ToList();
+            log.Info("Inventories obtained");
             return InventoryList;
         }
         public Inventory GetInventoriesByName(string ingredient)
         {
+            log.Info("Obtaining ingredient with given name");
             return _db.Inventory.AsNoTracking().FirstOrDefault(u => u.IngredientName.ToLower().Equals(ingredient.ToLower()));
         }
         //Inventory SaveChanges.
         public async void AddInventoryItem(Inventory NewItem)
         {
-            await _db.AddAsync(NewItem);
-            await _db.SaveChangesAsync();
+            try
+            {
+                log.Info("Attempting to add item to inventory");
+                await _db.AddAsync(NewItem);
+                await _db.SaveChangesAsync();
+                log.Info("Item added");
+            }
+
+            catch(Exception ex)
+            {
+                log.Info("Exception thrown");
+                log.Info(ex.Message);
+                log.Info(ex.StackTrace);
+            }
         }
 
         #endregion
