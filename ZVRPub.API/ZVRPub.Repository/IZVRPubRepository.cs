@@ -7,7 +7,7 @@ namespace ZVRPub.Repository
     public interface IZVRPubRepository
     {
         void AddInventoryItem(Inventory NewItem);
-        void AddLocationAsync(Locations loc);
+        Task AddLocationAsync(Locations loc);
         void AddOrderAsync(Orders NewOrder);
         Task AddUserAsync(Users user);
         void EditInventoryAsync(InventoryHasLocation inventory);

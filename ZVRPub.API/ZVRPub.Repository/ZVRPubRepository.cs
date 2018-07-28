@@ -57,16 +57,32 @@ namespace ZVRPub.Repository
             return LocationList;
         }
 
-        public async void AddLocationAsync(Locations loc)
+        public Locations GetLocationById(int id)
+        {
+            return _db.Locations.AsNoTracking().First(l => l.Id == id);
+        }
+
+        public async Task AddLocationAsync(Locations loc)
         {
             await _db.AddAsync(loc);
             await _db.SaveChangesAsync();
         }
 
-        public Locations GetLocationById(int id)
+        public Locations GetLocationByName(string name)
         {
-            return _db.Locations.AsNoTracking().First(l => l.Id == id);
+            return _db.Locations.AsNoTracking().First(l => l.City == name);
         }
+
+        public void UpdateLocation(Locations location)
+        {
+            // calling Update would mark every property as Modified.
+            // this way will only mark the changed properties as Modified.
+            _db.Entry(_db.Locations.Find(location.Id)).CurrentValues.SetValues(location);
+        }
+
+
+
+
         #endregion
 
         #region Orders
@@ -134,6 +150,8 @@ namespace ZVRPub.Repository
             await _db.AddAsync(NewItem);
             await _db.SaveChangesAsync();
         }
+
+        
 
         #endregion
 
