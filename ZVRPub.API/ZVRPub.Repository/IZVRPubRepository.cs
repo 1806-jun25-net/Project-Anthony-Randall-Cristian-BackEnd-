@@ -8,6 +8,7 @@ namespace ZVRPub.Repository
     {
         void AddInventoryItem(Inventory NewItem);
         Task AddLocationAsync(Locations loc);
+        void UpdateLocation(Locations value);
         void AddOrderAsync(Orders NewOrder);
         Task AddUserAsync(Users user);
         void EditInventoryAsync(InventoryHasLocation inventory);

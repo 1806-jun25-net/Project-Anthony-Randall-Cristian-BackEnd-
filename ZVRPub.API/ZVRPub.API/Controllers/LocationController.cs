@@ -50,6 +50,7 @@ namespace ZVRPub.API.Controllers
 
             };
 
+
             await Repo.AddLocationAsync(locations);
 
             return NoContent();
@@ -60,8 +61,10 @@ namespace ZVRPub.API.Controllers
 
         // PUT: api/Location/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult<Locations> Put(Locations value)
         {
+            Repo.UpdateLocation(value);
+            return NoContent();
         }
 
         // DELETE: api/ApiWithActions/5

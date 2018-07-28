@@ -77,6 +77,7 @@ namespace ZVRPub.Repository
         {
             // calling Update would mark every property as Modified.
             // this way will only mark the changed properties as Modified.
+
             _db.Entry(_db.Locations.Find(location.Id)).CurrentValues.SetValues(location);
         }
 
