@@ -164,14 +164,24 @@ namespace ZVRPub.Repository
         {
             return _db.LocationOrderProcess.AsNoTracking();
         }
+        public async Task addLocationProcess(LocationOrderProcess LOP)
+        {
+            await _db.LocationOrderProcess.AddAsync(LOP);
+        }
         #endregion
 
         #region MenuCustom
-
+        public async Task addMenuCustom(MenuCustom menu)
+        {
+            await _db.AddAsync(menu);
+        }
         #endregion
 
         #region MenuCustomHasInventory
-
+        public async Task addMenuCustomHasInv(MenuCustomHasIventory MCI)
+        {
+            await _db.MenuCustomHasIventory.AddAsync(MCI);
+        } 
         #endregion
 
         #region MenuPreBuilt
