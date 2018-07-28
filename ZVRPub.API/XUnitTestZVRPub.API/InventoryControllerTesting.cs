@@ -72,6 +72,57 @@ namespace XUnitTestZVRPub.API
             Assert.Same(inventory5, result.Value[4]);
         }
 
+        [Fact]
+        public void InventoryControllerShouldBeAbleToReturnInventoryItemsByIngredientName()
+        {
+            Inventory inventory1 = new Inventory
+            {
+                Id = 1,
+                IngredientName = "Tomato",
+                IngredientType = "Fruit",
+                Price = 0.50M
+            };
+            Inventory inventory2 = new Inventory
+            {
+                Id = 2,
+                IngredientName = "Chicken wing - 8 pieces",
+                IngredientType = "Meat",
+                Price = 0.25M
+            };
+            Inventory inventory3 = new Inventory
+            {
+                Id = 3,
+                IngredientName = "Cheese",
+                IngredientType = "Dairy",
+                Price = 1.00M
+            };
+            Inventory inventory4 = new Inventory
+            {
+                Id = 4,
+                IngredientName = "Coke",
+                IngredientType = "Soda",
+                Price = 1.50M
+            };
+            Inventory inventory5 = new Inventory
+            {
+                Id = 5,
+                IngredientName = "Guiness",
+                IngredientType = "Alcohol",
+                Price = 4.00M
+            };
 
+            var repoMock = new Mock<IZVRPubRepository>();
+            repoMock.Setup(c => c.GetInventoriesByName("Coke")).Returns(inventory4);
+
+            var controller = new InventoryController(repoMock.Object);
+            var result = controller.GetAll();
+
+            Assert.NotNull(result.Value);
+            Assert.Same(inventory4, result.Value);
+            Assert.NotSame(inventory1, result.Value);
+            Assert.NotSame(inventory2, result.Value);
+            Assert.NotSame(inventory3, result.Value);
+            Assert.NotSame(inventory5, result.Value);
+        }
     }
 }
