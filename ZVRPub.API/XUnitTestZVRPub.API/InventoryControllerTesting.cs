@@ -72,6 +72,11 @@ namespace XUnitTestZVRPub.API
             Assert.Same(inventory5, result.Value[4]);
         }
 
+        /// <summary>
+        /// <Purpose>Tests method to search for a single inventory ingredient by name of said ingredient</Purpose>
+        /// 
+        /// <Result>Test passes if result is not null, result is exactly the searched for ingredients, and all other ingredients are not returned</Result>
+        /// </summary>
         [Fact]
         public void InventoryControllerShouldBeAbleToReturnInventoryItemsByIngredientName()
         {
@@ -115,7 +120,7 @@ namespace XUnitTestZVRPub.API
             repoMock.Setup(c => c.GetInventoriesByName("Coke")).Returns(inventory4);
 
             var controller = new InventoryController(repoMock.Object);
-            var result = controller.GetAll();
+            var result = controller.Get("Coke");
 
             Assert.NotNull(result.Value);
             Assert.Same(inventory4, result.Value);
