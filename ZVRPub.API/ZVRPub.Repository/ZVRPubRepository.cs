@@ -206,6 +206,36 @@ namespace ZVRPub.Repository
             }
         }
 
+        Task IZVRPubRepository.AddOrderAsync(Orders NewOrder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task addPreMenuOrder(int OrderId, int MenuPreId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Orders FindOrdersByDate(DateTime DO)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<InventoryHasLocation> getLocationInv()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<LocationOrderProcess> GetOrderProcesses()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateUser(Users u)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region LocationOrderProcess
