@@ -264,7 +264,15 @@ namespace ZVRPub.Repository
         #endregion
 
         #region MenuPreBuiltHasOrders
-
+        public async Task addPremadeItemInOrder(int OrderId, int PreID)
+        {
+            var Pre = new MenuPrebuiltHasOrders()
+            {
+                OrdersId = OrderId, 
+                MenuPreBuildId = PreID
+            };
+            await _db.MenuPrebuiltHasOrders.AddAsync(Pre);
+        }
         #endregion
 
 
