@@ -10,7 +10,7 @@ namespace ZVRPub.Repository
         void AddInventoryItem(Inventory NewItem);
         void AddLocationAsync(Locations loc);
         Task AddOrderAsync(Orders NewOrder);
-        Task addPreMenuOrder(int OrderId, int MenuPreId);
+        Task addPreMenuOrder(MenuPrebuiltHasOrders menu);
         Task AddUserAsync(Users user);
         void EditInventoryAsync(InventoryHasLocation inventory);
         Orders FindOrdersByDate(DateTime DO);
@@ -27,7 +27,7 @@ namespace ZVRPub.Repository
         IEnumerable<Orders> GetOrdersByUsername(string user);
         Users GetUserByUsername(string username);
         IEnumerable<Users> GetUsers();
-        void Save();
+      
         Task UpdateUser(Users u);
     }
 }

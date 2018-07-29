@@ -206,19 +206,19 @@ namespace ZVRPub.Repository
             }
         }
 
-        Task IZVRPubRepository.AddOrderAsync(Orders NewOrder)
+        Task  IZVRPubRepository.AddOrderAsync(Orders NewOrder)
         {
             throw new NotImplementedException();
         }
 
-        public Task addPreMenuOrder(int OrderId, int MenuPreId)
+        public async Task addPreMenuOrder(MenuPrebuiltHasOrders menu)
         {
-            throw new NotImplementedException();
+            await _db.MenuPrebuiltHasOrders.AddAsync(menu);
         }
 
         public Orders FindOrdersByDate(DateTime DO)
         {
-            throw new NotImplementedException();
+            return GetOrders().FirstOrDefault(x => x.OrderTime == DO);
         }
 
         public IEnumerable<InventoryHasLocation> getLocationInv()
@@ -232,6 +232,11 @@ namespace ZVRPub.Repository
         }
 
         public Task UpdateUser(Users u)
+        {
+            throw new NotImplementedException();
+        }
+       
+        public void UpdatePreBuiltMenu(string v1, int v2)
         {
             throw new NotImplementedException();
         }
