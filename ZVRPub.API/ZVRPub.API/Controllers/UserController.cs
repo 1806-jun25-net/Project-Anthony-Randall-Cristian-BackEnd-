@@ -19,7 +19,27 @@ namespace ZVRPub.API.Controllers
 
         private readonly IZVRPubRepository Repo;
         private SignInManager<IdentityUser> _signInManager { get; }
-        
+
+        [HttpPost]
+        public async Task<ActionResult<User>> Post(AllUserInfo NewUser)
+        {
+            Users user = new Users
+            {
+                Username = NewUser.Username,
+                FirstName = NewUser.FirstName,
+                LastName = NewUser.LastName,
+                DateOfBirth = NewUser.DateOfBirth,
+                UserAddress = NewUser.UserAddress,
+                PhoneNumber = NewUser.PhoneNumber,
+                Email = NewUser.Email,
+                LevelPermission = false,
+                UserPic = NewUser.UserPic
+            };
+            await Repo.AddUserAsync(user);
+            return NoContent();
+        }
+
+
         public UserController(IZVRPubRepository repo)
         {
             log.Info("Creating instance of user controller");
