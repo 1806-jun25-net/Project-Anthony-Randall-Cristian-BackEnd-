@@ -9,7 +9,8 @@ namespace ZVRPub.Repository
     {
         void AddInventoryItem(Inventory NewItem);
         void AddLocationAsync(Locations loc);
-        Task AddOrderAsync(Orders NewOrder);
+        void AddOrderAsync(Orders NewOrder);
+        Task addPremadeItemInOrder(int OrderId, int PreID);
         Task addPreMenuOrder(MenuPrebuiltHasOrders menu);
         Task AddUserAsync(Users user);
         void EditInventoryAsync(InventoryHasLocation inventory);
@@ -21,13 +22,13 @@ namespace ZVRPub.Repository
         IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationId(int id);
         IEnumerable<Locations> GetLocations();
         IEnumerable<LocationOrderProcess> GetOrderProcesses();
-        void UpdatePreBuiltMenu(string v1, int v2);
         IEnumerable<Orders> GetOrders();
         IEnumerable<Orders> GetOrdersByLocation(int id);
         IEnumerable<Orders> GetOrdersByUsername(string user);
         Users GetUserByUsername(string username);
         IEnumerable<Users> GetUsers();
-      
+        void Save();
+        void UpdatePreBuiltMenu(string v1, int v2);
         Task UpdateUser(Users u);
     }
 }

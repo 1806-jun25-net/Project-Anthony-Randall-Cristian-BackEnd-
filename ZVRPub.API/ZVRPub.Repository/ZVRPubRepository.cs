@@ -206,10 +206,10 @@ namespace ZVRPub.Repository
             }
         }
 
-        Task  IZVRPubRepository.AddOrderAsync(Orders NewOrder)
-        {
-            throw new NotImplementedException();
-        }
+        //Task  IZVRPubRepository.AddOrderAsync(Orders NewOrder)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public async Task addPreMenuOrder(MenuPrebuiltHasOrders menu)
         {

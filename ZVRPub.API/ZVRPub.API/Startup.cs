@@ -74,7 +74,7 @@ namespace ZVRPub.API
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.Name = "ZVRPubAuth";
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(120);
                 options.Events = new CookieAuthenticationEvents
                 {
                     OnRedirectToLogin = ctx =>
