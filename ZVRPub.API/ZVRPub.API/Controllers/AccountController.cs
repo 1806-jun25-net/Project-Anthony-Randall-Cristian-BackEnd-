@@ -23,10 +23,10 @@ namespace ZVRPub.API.Controllers
 
         private SignInManager<IdentityUser> _signInManager { get; }
 
-        private readonly ZVRPubRepository Repo;
+        private readonly IZVRPubRepository Repo;
 
 
-        public AccountController(SignInManager<IdentityUser> signInManager, ZVRPubRepository repo)
+        public AccountController(SignInManager<IdentityUser> signInManager, IZVRPubRepository repo)
         {
             //log.Info("Creating instance of account controller");
             _signInManager = signInManager;
