@@ -206,6 +206,16 @@ namespace ZVRPub.Repository
             }
         }
 
+        Task IZVRPubRepository.AddLocationAsync(Locations loc)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateLocation(Locations value)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region LocationOrderProcess

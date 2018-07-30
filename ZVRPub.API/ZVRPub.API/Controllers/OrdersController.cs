@@ -42,7 +42,7 @@ namespace ZVRPub.API.Controllers
 
         // POST: api/Orders
         [HttpPost]
-        public async Task<ActionResult<Orders>> Post(Orders NewItem)
+        public ActionResult<Orders> Post(Orders NewItem)
         {
 
             Orders order = new Orders
@@ -52,7 +52,7 @@ namespace ZVRPub.API.Controllers
                 UserId = NewItem.UserId
             };
 
-//            await Repo.AddOrderAsync(order);
+            Repo.AddOrderAsync(order);
 
             return NoContent();
 
