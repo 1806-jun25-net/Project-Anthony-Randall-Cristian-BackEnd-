@@ -73,6 +73,7 @@ namespace ZVRPub.API
             log.Info("Registering cookie for login information storage");
             services.ConfigureApplicationCookie(options =>
             {
+                options.Cookie.Name = "ZVRPubAuth";
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
                 options.Events = new CookieAuthenticationEvents
                 {
