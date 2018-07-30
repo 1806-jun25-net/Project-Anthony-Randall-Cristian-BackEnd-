@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NLog;
+using ZVRPub.Library.Model;
 using ZVRPub.Repository;
 using ZVRPub.Scaffold;
 
@@ -49,12 +50,12 @@ namespace ZVRPub.API.Controllers
 
         // POST: api/Orders
         [HttpPost]
-        public ActionResult<Orders> Post(Orders NewItem)
+        public ActionResult<Orders> Post(Order NewItem)
         {
-
+            Locations loc = Repo.GetLocationByCity(NewItem.Location);
             Orders order = new Orders
             {
-                LocationId = NewItem.LocationId,
+                LocationId = loc.Id,
                 OrderTime = DateTime.Today,
                 UserId = NewItem.UserId
             };

@@ -86,10 +86,10 @@ namespace ZVRPub.Repository
             }
         }
 
-        public Locations GetLocationById(int id)
+        public Locations GetLocationByCity(string city)
         {
             log.Info("Obtaining single location from location id");
-            return _db.Locations.AsNoTracking().First(l => l.Id == id);
+            return _db.Locations.AsNoTracking().First(l => l.City == city);
         }
         #endregion
 
@@ -239,6 +239,15 @@ namespace ZVRPub.Repository
         #endregion
 
         #region MenuPreBuiltHasOrders
+
+        public IEnumerable<MenuPrebuiltHasOrders> GetMenuPreBuiltHasOrders()
+        {
+            log.Info("Obtaining all locations from database");
+            List<MenuPrebuiltHasOrders> MenuPrebuiltHasOrders = _db.MenuPrebuiltHasOrders.AsNoTracking().ToList();
+            log.Info("All locations obtained");
+            return MenuPrebuiltHasOrders;
+        }
+
 
         #endregion
 
