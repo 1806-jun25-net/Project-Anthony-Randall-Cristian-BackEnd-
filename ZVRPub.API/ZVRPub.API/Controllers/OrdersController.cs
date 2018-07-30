@@ -40,6 +40,13 @@ namespace ZVRPub.API.Controllers
             return "value";
         }
 
+        // GET: api/Locations/5
+        [HttpGet("{id}", Name = "GetLocation")]
+        public ActionResult<List<Locations>> GetLocation(int id)
+        {
+            return Repo.GetLocations().ToList();
+        }
+
         // POST: api/Orders
         [HttpPost]
         public ActionResult<Orders> Post(Orders NewItem)
