@@ -29,7 +29,7 @@ namespace ZVRPub.Scaffold
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
+          
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -151,6 +151,8 @@ namespace ZVRPub.Scaffold
                 entity.Property(e => e.NameOfMenu)
                     .IsRequired()
                     .HasMaxLength(255);
+
+                entity.Property(e => e.Price).HasColumnType("decimal(18, 0)");
             });
 
             modelBuilder.Entity<MenuPreBuiltHasInventory>(entity =>

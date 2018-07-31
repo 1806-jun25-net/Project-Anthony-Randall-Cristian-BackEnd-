@@ -86,10 +86,10 @@ namespace ZVRPub.Repository
             }
         }
 
-        public Locations GetLocationByCity(string city)
+        public Locations GetLocationById(int id)
         {
             log.Info("Obtaining single location from location id");
-            return _db.Locations.AsNoTracking().First(l => l.City == city);
+            return _db.Locations.AsNoTracking().First(l => l.Id == id);
         }
         #endregion
 
@@ -206,12 +206,37 @@ namespace ZVRPub.Repository
             }
         }
 
-        Task IZVRPubRepository.AddLocationAsync(Locations loc)
+        //Task  IZVRPubRepository.AddOrderAsync(Orders NewOrder)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        public async Task addPreMenuOrder(MenuPrebuiltHasOrders menu)
+        {
+            await _db.MenuPrebuiltHasOrders.AddAsync(menu);
+        }
+
+        public Orders FindOrdersByDate(DateTime DO)
+        {
+            return GetOrders().FirstOrDefault(x => x.OrderTime == DO);
+        }
+
+        public IEnumerable<InventoryHasLocation> getLocationInv()
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateLocation(Locations value)
+        public IEnumerable<LocationOrderProcess> GetOrderProcesses()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateUser(Users u)
+        {
+            throw new NotImplementedException();
+        }
+       
+        public void UpdatePreBuiltMenu(string v1, int v2)
         {
             throw new NotImplementedException();
         }
@@ -239,16 +264,15 @@ namespace ZVRPub.Repository
         #endregion
 
         #region MenuPreBuiltHasOrders
-
-        public IEnumerable<MenuPrebuiltHasOrders> GetMenuPreBuiltHasOrders()
+        public async Task addPremadeItemInOrder(int OrderId, int PreID)
         {
-            log.Info("Obtaining all locations from database");
-            List<MenuPrebuiltHasOrders> MenuPrebuiltHasOrders = _db.MenuPrebuiltHasOrders.AsNoTracking().ToList();
-            log.Info("All locations obtained");
-            return MenuPrebuiltHasOrders;
+            var Pre = new MenuPrebuiltHasOrders()
+            {
+                OrdersId = OrderId, 
+                MenuPreBuildId = PreID
+            };
+            await _db.MenuPrebuiltHasOrders.AddAsync(Pre);
         }
-
-
         #endregion
 
 

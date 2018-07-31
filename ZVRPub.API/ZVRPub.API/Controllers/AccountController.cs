@@ -28,7 +28,7 @@ namespace ZVRPub.API.Controllers
 
         public AccountController(SignInManager<IdentityUser> signInManager, IZVRPubRepository repo)
         {
-            log.Info("Creating instance of account controller");
+            //log.Info("Creating instance of account controller");
             _signInManager = signInManager;
             Repo = repo;
         }
@@ -65,6 +65,7 @@ namespace ZVRPub.API.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
+      
         public async Task<ActionResult> Register(AllUserInfo input,
             [FromServices] UserManager<IdentityUser> userManager,
             [FromServices] RoleManager<IdentityRole> roleManager, bool admin = false)

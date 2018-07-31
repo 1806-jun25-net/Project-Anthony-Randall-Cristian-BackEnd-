@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="BL\" />
+    <Folder Include="Model\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ZVRPub.Repository\ZVRPub.Repository.csproj" />
     <ProjectReference Include="..\ZVRPub.Scaffold\ZVRPub.Scaffold.csproj" />
   </ItemGroup>
 
