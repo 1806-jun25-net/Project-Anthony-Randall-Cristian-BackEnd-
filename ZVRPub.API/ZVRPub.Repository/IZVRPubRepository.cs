@@ -30,5 +30,8 @@ namespace ZVRPub.Repository
         void Save();
         void UpdatePreBuiltMenu(string v1, int v2);
         Task UpdateUser(Users u);
+        IEnumerable<MenuPrebuiltHasOrders> GetMenuPreBuiltHasOrders();
+        Locations GetLocationByCity(string city);
+        
     }
 }
