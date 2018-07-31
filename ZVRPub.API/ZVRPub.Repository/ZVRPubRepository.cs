@@ -86,10 +86,10 @@ namespace ZVRPub.Repository
             }
         }
 
-        public Locations GetLocationById(int id)
+        public Locations GetLocationByCity(string Location)
         {
             log.Info("Obtaining single location from location id");
-            return _db.Locations.AsNoTracking().First(l => l.Id == id);
+            return _db.Locations.AsNoTracking().First(l => l.City == Location);
         }
         #endregion
 

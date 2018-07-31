@@ -17,7 +17,7 @@ namespace ZVRPub.Repository
         Orders FindOrdersByDate(DateTime DO);
         IEnumerable<Inventory> GetInventories();
         Inventory GetInventoriesByName(string ingredient);
-        Locations GetLocationById(int id);
+        Locations GetLocationByCity(string Location);
         IEnumerable<InventoryHasLocation> getLocationInv();
         IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationId(int id);
         IEnumerable<Locations> GetLocations();
@@ -28,6 +28,7 @@ namespace ZVRPub.Repository
         Users GetUserByUsername(string username);
         IEnumerable<Users> GetUsers();
         void Save();
+
         void UpdatePreBuiltMenu(string v1, int v2);
         Task UpdateUser(Users u);
     }
