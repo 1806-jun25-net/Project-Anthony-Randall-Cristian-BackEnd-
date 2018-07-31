@@ -7,19 +7,24 @@ namespace ZVRPub.Library.BL
 {
     public class BusinessLogic
     {
-        private readonly IZVRPubRepository Repo; 
+        private readonly IZVRPubRepository Repo;
 
-        public bool AgeCheck(int UsersYear,int UsersMonth, DateTime Today)
+        public int years(DateTime start, DateTime end)
+        {
+            return (end.Year - start.Year - 1) +
+                (((end.Month > start.Month) ||
+                ((end.Month == start.Month) && (end.Day >= start.Day))) ? 1 : 0);
+        }
+
+        public bool AgeCheck(Users user)
         {
             bool ageCheck = true;
-            int checkYear = Today.Year - UsersYear; 
-            if(checkYear <= 21)
+            DateTime today = DateTime.Now;
+            DateTime birthday = user.DateOfBirth;
+            int checkYear = years(birthday, today); 
+            if(checkYear <= 20)
             {
-                if(!(checkYear == 20 && UsersMonth == Today.Month))
-                {
-                    ageCheck = false;
-                }
-               
+                ageCheck = false;
             }
             return ageCheck;
         }
