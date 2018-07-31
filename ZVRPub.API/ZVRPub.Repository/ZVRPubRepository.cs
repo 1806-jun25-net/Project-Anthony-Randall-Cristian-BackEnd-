@@ -273,6 +273,10 @@ namespace ZVRPub.Repository
             };
             await _db.MenuPrebuiltHasOrders.AddAsync(Pre);
         }
+        public IEnumerable<MenuPrebuiltHasOrders> GetMenuPreBuiltHasOrders()
+        {
+            return _db.MenuPrebuiltHasOrders.AsNoTracking();
+        }
         #endregion
 
 

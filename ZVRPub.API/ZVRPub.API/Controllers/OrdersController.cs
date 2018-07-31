@@ -55,11 +55,12 @@ namespace ZVRPub.API.Controllers
         {
 
             Locations loc = Repo.GetLocationByCity(NewItem.Location);
+            Users u = Repo.GetUserByUsername(NewItem.Username);
             Orders order = new Orders
             {
                 LocationId = loc.Id,
                 OrderTime = DateTime.Today,
-                UserId = NewItem.UserId
+                UserId = u.UserId
             };
 
             Repo.AddOrderAsync(order);

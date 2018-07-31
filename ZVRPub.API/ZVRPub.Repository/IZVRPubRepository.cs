@@ -22,6 +22,7 @@ namespace ZVRPub.Repository
         IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationId(int id);
         IEnumerable<Locations> GetLocations();
         IEnumerable<LocationOrderProcess> GetOrderProcesses();
+        IEnumerable<MenuPrebuiltHasOrders> GetMenuPreBuiltHasOrders();
         IEnumerable<Orders> GetOrders();
         IEnumerable<Orders> GetOrdersByLocation(int id);
         IEnumerable<Orders> GetOrdersByUsername(string user);

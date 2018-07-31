@@ -39,7 +39,7 @@ namespace ZVRPub.API.Controllers
         public async Task<ActionResult> Login(User input)
         {
             log.Info("Beginning login");
-            var result = await _signInManager.PasswordSignInAsync(input.Username, input.Password,
+            var result = await _signInManager.PasswordSignInAsync(input.Username, input.UserPassword,
                 isPersistent: false, lockoutOnFailure: false);
 
             if (!result.Succeeded)
