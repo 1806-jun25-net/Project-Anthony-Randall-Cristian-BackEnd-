@@ -59,7 +59,7 @@ namespace ZVRPub.API.Controllers
             Orders order = new Orders
             {
                 LocationId = loc.Id,
-                OrderTime = DateTime.Today,
+                OrderTime = DateTime.Now,
                 UserId = u.UserId
             };
 

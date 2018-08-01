@@ -35,5 +35,15 @@ namespace ZVRPub.Repository
 
         void UpdatePreBuiltMenu(string v1, int v2);
         Task UpdateUser(Users u);
+        Users GetUserByUserById(int id);
+        InventoryHasLocation invHasLoc(int id, int qty);
+        IEnumerable<InventoryHasLocation> GetAllLocationInventoryByLocation();
+        IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationCityID(int id);
+        Task InventoryHasLocationUpdateQTYAsync(int idLocation, int idInventory);
+
+
+
+
+
     }
 }

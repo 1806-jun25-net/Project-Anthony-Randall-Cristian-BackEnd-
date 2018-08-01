@@ -71,6 +71,12 @@ namespace ZVRPub.Repository
             return UsernameTaken;
         }
 
+        public Users GetUserByUserById(int id)
+        {
+            log.Info("Retreiving user from database with given username");
+            return _db.Users.AsNoTracking().FirstOrDefault(u => u.UserId.Equals(id));
+        }
+
         #endregion
 
         #region Locations
@@ -165,11 +171,22 @@ namespace ZVRPub.Repository
 
         #region InventoryHasLocation
 
+        
+
         public IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationId(int id)
         {
             log.Info("Attempting to get inventory by location id");
             List<InventoryHasLocation> InventoryList = _db.InventoryHasLocation.AsNoTracking().Where(i => i.LocationId == id).ToList();
             log.Info("Inventory retreived");
+            return InventoryList;
+        }
+
+        public IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationCityID(int id)
+        {
+            log.Info("Attempting to get inventory by location id");
+            List<InventoryHasLocation> InventoryList = _db.InventoryHasLocation.AsNoTracking().Where(i => i.LocationId == id).ToList();
+            log.Info("Inventory retreived");
+            
             return InventoryList;
         }
 
@@ -191,6 +208,30 @@ namespace ZVRPub.Repository
             }
         }
 
+        public InventoryHasLocation invHasLoc(int id, int qty)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task InventoryHasLocationUpdateQTYAsync(int idLocation, int idInventory)
+        {
+            var allInventoryLoc = _db.InventoryHasLocation.AsNoTracking().FirstOrDefault(u => u.LocationId.Equals(idLocation) && u.InventoryId.Equals(idInventory));
+            allInventoryLoc.Quantity -= 1;
+            try
+            {
+                log.Info("Attempting to edit inventory");
+                _db.Update(allInventoryLoc);
+                await _db.SaveChangesAsync();
+                log.Info("Inventory updated");
+            }
+
+            catch (Exception ex)
+            {
+                log.Info("Exception thrown");
+                log.Info(ex.Message);
+                log.Info(ex.StackTrace);
+            }
+        }
 
         #endregion
 
@@ -304,7 +345,25 @@ namespace ZVRPub.Repository
             return MenuPrebuiltHasOrders;
         }
 
-       
+        public IEnumerable<InventoryHasLocation> GetAllLocationInventoryByLocation()
+        {
+            log.Info("Obtaining all inventory has location from database");
+            List<InventoryHasLocation> InventoryHasLocation1 = _db.InventoryHasLocation.AsNoTracking().ToList();
+            log.Info("Inventory obtained");
+            return InventoryHasLocation1;
+        }
+
+        
+
+
+
+
+
+
+
+
+
+
 
 
 
