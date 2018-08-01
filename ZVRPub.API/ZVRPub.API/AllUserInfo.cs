@@ -26,5 +26,6 @@ namespace ZVRPub.API
         [StringLength(100, MinimumLength = 6)]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }
