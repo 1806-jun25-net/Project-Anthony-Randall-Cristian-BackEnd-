@@ -25,12 +25,14 @@ namespace ZVRPub.Repository
         IEnumerable<Locations> GetLocations();
         IEnumerable<MenuPrebuiltHasOrders> GetMenuPreBuiltHasOrders();
         IEnumerable<LocationOrderProcess> GetOrderProcesses();
+        IEnumerable<MenuPrebuiltHasOrders> GetMenuPreBuiltHasOrders();
         IEnumerable<Orders> GetOrders();
         IEnumerable<Orders> GetOrdersByLocation(int id);
         IEnumerable<Orders> GetOrdersByUsername(string user);
         Users GetUserByUsername(string username);
         IEnumerable<Users> GetUsers();
         void Save();
+
         void UpdatePreBuiltMenu(string v1, int v2);
         Task UpdateUser(Users u);
     }
