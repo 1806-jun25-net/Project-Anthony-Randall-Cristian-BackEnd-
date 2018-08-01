@@ -54,11 +54,19 @@ namespace ZVRPub.API.Controllers
         }
 
         // GET: api/User/5
-        [HttpGet("{id}", Name = "GetUser")]
+        [HttpGet("{username}", Name = "GetUser")]
         public ActionResult<Users> Get(string u)
         {
             log.Info("Retreiving user with given username");
            return Repo.GetUserByUsername(u);
+        }
+
+        // GET: api/User/5
+        [HttpGet("{id}", Name = "GetUserById")]
+        public ActionResult<Users> GetUserById(int id)
+        {
+            log.Info("Retreiving user with given username");
+            return Repo.GetUserByUserById(id);
         }
 
         // PUT: api/User/5

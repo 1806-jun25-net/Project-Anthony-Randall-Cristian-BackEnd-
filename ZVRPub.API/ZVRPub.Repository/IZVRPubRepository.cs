@@ -32,6 +32,7 @@ namespace ZVRPub.Repository
         Task UpdateUser(Users u);
         IEnumerable<MenuPrebuiltHasOrders> GetMenuPreBuiltHasOrders();
         Locations GetLocationByCity(string city);
-        
+        Users GetUserByUserById(int id);
+
     }
 }

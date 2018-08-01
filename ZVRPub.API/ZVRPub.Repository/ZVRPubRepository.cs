@@ -57,6 +57,12 @@ namespace ZVRPub.Repository
             return _db.Users.AsNoTracking().FirstOrDefault(u => u.Username.ToLower().Equals(username.ToLower()));
         }
 
+        public Users GetUserByUserById(int id)
+        {
+            log.Info("Retreiving user from database with given username");
+            return _db.Users.AsNoTracking().FirstOrDefault(u => u.UserId.Equals(id));
+        }
+
         #endregion
 
         #region Locations
@@ -290,7 +296,9 @@ namespace ZVRPub.Repository
             return MenuPrebuiltHasOrders;
         }
 
-       
+        
+
+
 
 
 
