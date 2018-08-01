@@ -57,10 +57,18 @@ namespace ZVRPub.Repository
             return _db.Users.AsNoTracking().FirstOrDefault(u => u.Username.ToLower().Equals(username.ToLower()));
         }
 
-        public Users GetUserByUserById(int id)
+        public bool CheckIfUsernameInDatabase(string CheckName)
         {
-            log.Info("Retreiving user from database with given username");
-            return _db.Users.AsNoTracking().FirstOrDefault(u => u.UserId.Equals(id));
+            bool UsernameTaken = false;
+
+            var token = _db.Users.AsNoTracking().FirstOrDefault(u => u.Username.ToLower().Equals(CheckName.ToLower()));
+
+            if(token != null)
+            {
+                UsernameTaken = true;
+            }
+
+            return UsernameTaken;
         }
 
         #endregion
@@ -296,9 +304,7 @@ namespace ZVRPub.Repository
             return MenuPrebuiltHasOrders;
         }
 
-        
-
-
+       
 
 
 

@@ -73,6 +73,12 @@ namespace ZVRPub.API.Controllers
             // with an [ApiController], model state is always automatically checked
             // and return 400 if any errors.
 
+            bool UsernameTaken = Repo.CheckIfUsernameInDatabase(input.Username);
+            if (UsernameTaken)
+            {
+                return StatusCode(418, UsernameTaken);
+            }
+
             log.Info("Beginning new user registration");
             var user = new IdentityUser(input.Username);
 
