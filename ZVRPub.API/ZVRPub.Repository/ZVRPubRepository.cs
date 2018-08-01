@@ -57,6 +57,20 @@ namespace ZVRPub.Repository
             return _db.Users.AsNoTracking().FirstOrDefault(u => u.Username.ToLower().Equals(username.ToLower()));
         }
 
+        public bool CheckIfUsernameInDatabase(string CheckName)
+        {
+            bool UsernameTaken = false;
+
+            var token = _db.Users.AsNoTracking().FirstOrDefault(u => u.Username.ToLower().Equals(CheckName.ToLower()));
+
+            if(token != null)
+            {
+                UsernameTaken = true;
+            }
+
+            return UsernameTaken;
+        }
+
         #endregion
 
         #region Locations

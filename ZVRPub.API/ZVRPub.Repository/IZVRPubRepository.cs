@@ -13,25 +13,25 @@ namespace ZVRPub.Repository
         Task addPremadeItemInOrder(int OrderId, int PreID);
         Task addPreMenuOrder(MenuPrebuiltHasOrders menu);
         Task AddUserAsync(Users user);
+        bool CheckIfUsernameInDatabase(string CheckName);
         void EditInventoryAsync(InventoryHasLocation inventory);
         Orders FindOrdersByDate(DateTime DO);
         IEnumerable<Inventory> GetInventories();
         Inventory GetInventoriesByName(string ingredient);
-        Locations GetLocationByCity(string Location);
+        Locations GetLocationByCity(string city);
+        Locations GetLocationById(int id);
         IEnumerable<InventoryHasLocation> getLocationInv();
         IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationId(int id);
         IEnumerable<Locations> GetLocations();
-        IEnumerable<LocationOrderProcess> GetOrderProcesses();
         IEnumerable<MenuPrebuiltHasOrders> GetMenuPreBuiltHasOrders();
+        IEnumerable<LocationOrderProcess> GetOrderProcesses();
         IEnumerable<Orders> GetOrders();
         IEnumerable<Orders> GetOrdersByLocation(int id);
         IEnumerable<Orders> GetOrdersByUsername(string user);
         Users GetUserByUsername(string username);
         IEnumerable<Users> GetUsers();
         void Save();
-
         void UpdatePreBuiltMenu(string v1, int v2);
         Task UpdateUser(Users u);
-       
     }
 }

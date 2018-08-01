@@ -97,7 +97,7 @@ namespace ZVRPub.API
 
             log.Info("Registering identity db context");
             services.AddDbContext<IdentityDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("TodoApiAuthDB"),
+                options.UseSqlServer(Configuration.GetConnectionString("ZVRPubIdentity"),
                     b => b.MigrationsAssembly("ZVRPub.API")));
         }
 
