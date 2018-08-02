@@ -35,8 +35,8 @@ namespace ZVRPub.API.Controllers
             return Repo.GetUsers().ToList();
         }
 
-        // GET: api/User/5
-        [HttpGet("{username}", Name = "GetUser")]
+        // GET: api/User/
+        [HttpGet("{UserName}", Name = "GetUser")]
         public ActionResult<Users> Get(string u)
         {
             log.Info("Retreiving user with given username");
