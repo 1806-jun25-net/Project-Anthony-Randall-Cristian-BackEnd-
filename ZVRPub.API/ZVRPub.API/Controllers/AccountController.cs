@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -134,6 +135,15 @@ namespace ZVRPub.API.Controllers
             await Repo.AddUserAsync(u);
 
             log.Info("User registration successful");
+            return NoContent();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(403)]
+        public async Task<ActionResult> Redirect(User input)
+        {
             return NoContent();
         }
     }
