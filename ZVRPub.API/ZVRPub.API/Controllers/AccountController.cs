@@ -55,6 +55,25 @@ namespace ZVRPub.API.Controllers
 
         [HttpPost]
         [ProducesResponseType(204)]
+        [ProducesResponseType(403)]
+        public async Task<ActionResult> Login(User input)
+        {
+            log.Info("Beginning login");
+            var result = await _signInManager.PasswordSignInAsync(input.Username, input.UserPassword,
+                isPersistent: false, lockoutOnFailure: false);
+
+            if (!result.Succeeded)
+            {
+                log.Info("HTTP Status code 403 - user unable to perform desired action");
+                return StatusCode(403); // Forbidden
+            }
+
+            log.Info("HTTP status code 204 - logging user in");
+            return NoContent();
+        }
+
+        [HttpPost]
+        [ProducesResponseType(204)]
         public async Task<NoContentResult> Logout()
         {
             log.Info("Logging current user out");
