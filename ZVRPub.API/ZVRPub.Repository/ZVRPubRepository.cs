@@ -21,7 +21,7 @@ namespace ZVRPub.Repository
             _db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-        #region Users
+      
         public IEnumerable<Users> GetUsers()
         {
             log.Info("Obtaining all users from database");
@@ -39,7 +39,7 @@ namespace ZVRPub.Repository
                 await _db.SaveChangesAsync();
                 log.Info("User added to database");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.Info("Exception thrown");
                 log.Info(ex.Message);
@@ -63,7 +63,7 @@ namespace ZVRPub.Repository
 
             var token = _db.Users.AsNoTracking().FirstOrDefault(u => u.Username.ToLower().Equals(CheckName.ToLower()));
 
-            if(token != null)
+            if (token != null)
             {
                 UsernameTaken = true;
             }
@@ -71,9 +71,7 @@ namespace ZVRPub.Repository
             return UsernameTaken;
         }
 
-        #endregion
-
-        #region Locations
+       
 
         public IEnumerable<Locations> GetLocations()
         {
@@ -91,8 +89,8 @@ namespace ZVRPub.Repository
                 await _db.AddAsync(loc);
                 await _db.SaveChangesAsync();
             }
-            
-            catch(Exception ex)
+
+            catch (Exception ex)
             {
                 log.Info("Exception thrown");
                 log.Info(ex.Message);
@@ -113,9 +111,7 @@ namespace ZVRPub.Repository
             return _db.Locations.AsNoTracking().First(l => l.City == city);
         }
 
-        #endregion
-
-        #region Orders
+        
 
         public IEnumerable<Orders> GetOrders()
         {
@@ -143,7 +139,7 @@ namespace ZVRPub.Repository
             return OrderList;
         }
 
-        public async void AddOrderAsync(Orders NewOrder)
+        public async Task AddOrderAsync(Orders NewOrder)
         {
             try
             {
@@ -153,7 +149,7 @@ namespace ZVRPub.Repository
                 log.Info("Order added");
             }
 
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.Info("Exception thrown");
                 log.Info(ex.Message);
@@ -161,9 +157,7 @@ namespace ZVRPub.Repository
             }
         }
 
-        #endregion
-
-        #region InventoryHasLocation
+       
 
         public IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationId(int id)
         {
@@ -182,8 +176,8 @@ namespace ZVRPub.Repository
                 await _db.SaveChangesAsync();
                 log.Info("Inventory updated");
             }
-            
-            catch(Exception ex)
+
+            catch (Exception ex)
             {
                 log.Info("Exception thrown");
                 log.Info(ex.Message);
@@ -192,9 +186,7 @@ namespace ZVRPub.Repository
         }
 
 
-        #endregion
-
-        #region Inventory
+        
 
         //Inventory Table.
         public IEnumerable<Inventory> GetInventories()
@@ -220,7 +212,7 @@ namespace ZVRPub.Repository
                 log.Info("Item added");
             }
 
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.Info("Exception thrown");
                 log.Info(ex.Message);
@@ -228,19 +220,16 @@ namespace ZVRPub.Repository
             }
         }
 
-        //Task  IZVRPubRepository.AddOrderAsync(Orders NewOrder)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
+      
         public async Task addPreMenuOrder(MenuPrebuiltHasOrders menu)
         {
             await _db.MenuPrebuiltHasOrders.AddAsync(menu);
+            await _db.SaveChangesAsync();
         }
 
         public Orders FindOrdersByDate(DateTime DO)
         {
-            return GetOrders().FirstOrDefault(x => x.OrderTime == DO);
+            return _db.Orders.FirstOrDefault(x => x.OrderTime.ToLongTimeString().Equals(DO.ToLongTimeString()));
         }
 
         public IEnumerable<InventoryHasLocation> getLocationInv()
@@ -257,43 +246,22 @@ namespace ZVRPub.Repository
         {
             throw new NotImplementedException();
         }
-       
+
         public void UpdatePreBuiltMenu(string v1, int v2)
         {
             throw new NotImplementedException();
         }
 
-        #endregion
-
-        #region LocationOrderProcess
-
-        #endregion
-
-        #region MenuCustom
-
-        #endregion
-
-        #region MenuCustomHasInventory
-
-        #endregion
-
-        #region MenuPreBuilt
-
-        #endregion
-
-        #region MenuPreBuiltHasInventory
-
-        #endregion
-
-        #region MenuPreBuiltHasOrders
+        
         public async Task addPremadeItemInOrder(int OrderId, int PreID)
         {
             var Pre = new MenuPrebuiltHasOrders()
             {
-                OrdersId = OrderId, 
+                OrdersId = OrderId,
                 MenuPreBuildId = PreID
             };
             await _db.MenuPrebuiltHasOrders.AddAsync(Pre);
+            await _db.SaveChangesAsync();
         }
 
         public IEnumerable<MenuPrebuiltHasOrders> GetMenuPreBuiltHasOrders()
@@ -304,12 +272,31 @@ namespace ZVRPub.Repository
             return MenuPrebuiltHasOrders;
         }
 
-       
 
+        public MenuPreBuilt GetPreMenuByNameOfProduct(string np){
 
+            return _db.MenuPreBuilt.FirstOrDefault(o => o.NameOfMenu.ToLower().Equals( np.ToLower()));
+            }
 
-        #endregion
+        public Orders FindLastOrderOfUserAsync(int userId) { return _db.Orders.AsNoTracking().LastOrDefault(u => u.UserId == userId); }
 
+        public async Task addCustomOrder(MenuCustom MC)
+        {
+            await _db.MenuCustom.AddAsync(MC);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task AddCustomeOrderHasInventroy(MenuCustomHasIventory MCHasInv)
+        {
+            await _db.MenuCustomHasIventory.AddAsync(MCHasInv);
+            await _db.SaveChangesAsync();
+        }
+        public async Task AddPrebuiltOrderHasInventroy(MenuPreBuiltHasInventory MPHasInv)
+        {
+            await _db.MenuPreBuiltHasInventory.AddAsync(MPHasInv);
+            await _db.SaveChangesAsync();
+        }
+    
 
 
 

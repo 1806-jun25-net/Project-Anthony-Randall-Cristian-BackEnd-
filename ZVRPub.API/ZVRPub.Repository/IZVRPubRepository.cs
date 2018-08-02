@@ -7,33 +7,90 @@ namespace ZVRPub.Repository
 {
     public interface IZVRPubRepository
     {
-        void AddInventoryItem(Inventory NewItem);
-        void AddLocationAsync(Locations loc);
-        void AddOrderAsync(Orders NewOrder);
-        Task addPremadeItemInOrder(int OrderId, int PreID);
-        Task addPreMenuOrder(MenuPrebuiltHasOrders menu);
-        Task AddUserAsync(Users user);
-        bool CheckIfUsernameInDatabase(string CheckName);
-        void EditInventoryAsync(InventoryHasLocation inventory);
-        Orders FindOrdersByDate(DateTime DO);
-        IEnumerable<Inventory> GetInventories();
-        Inventory GetInventoriesByName(string ingredient);
-        Locations GetLocationByCity(string city);
-        Locations GetLocationById(int id);
-        IEnumerable<InventoryHasLocation> getLocationInv();
-        IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationId(int id);
-        IEnumerable<Locations> GetLocations();
-        IEnumerable<MenuPrebuiltHasOrders> GetMenuPreBuiltHasOrders();
-        IEnumerable<LocationOrderProcess> GetOrderProcesses();
-     
-        IEnumerable<Orders> GetOrders();
-        IEnumerable<Orders> GetOrdersByLocation(int id);
-        IEnumerable<Orders> GetOrdersByUsername(string user);
-        Users GetUserByUsername(string username);
-        IEnumerable<Users> GetUsers();
-        void Save();
 
-        void UpdatePreBuiltMenu(string v1, int v2);
-        Task UpdateUser(Users u);
+        IEnumerable<Users> GetUsers();
+
+        Task AddUserAsync(Users user);
+
+        Users GetUserByUsername(string username);
+
+        bool CheckIfUsernameInDatabase(string CheckName);
+
+        IEnumerable<Locations> GetLocations();
+
+
+        void AddLocationAsync(Locations loc);
+
+
+        Locations GetLocationById(int id);
+
+
+        Locations GetLocationByCity(string city);
+
+        IEnumerable<Orders> GetOrders();
+
+
+        IEnumerable<Orders> GetOrdersByLocation(int id);
+
+        IEnumerable<Orders> GetOrdersByUsername(string user);
+
+
+        Task AddOrderAsync(Orders NewOrder);
+
+
+        IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationId(int id);
+
+
+        void EditInventoryAsync(InventoryHasLocation inventory);
+
+
+
+
+
+        IEnumerable<Inventory> GetInventories();
+
+        Inventory GetInventoriesByName(string ingredient);
+
+        //Inventory SaveChanges.
+        void AddInventoryItem(Inventory NewItem);
+
+        Task addPreMenuOrder(MenuPrebuiltHasOrders menu);
+
+
+        Orders FindOrdersByDate(DateTime DO);
+
+
+
+
+        Task addPremadeItemInOrder(int OrderId, int PreID);
+
+
+        IEnumerable<MenuPrebuiltHasOrders> GetMenuPreBuiltHasOrders();
+
+
+        MenuPreBuilt GetPreMenuByNameOfProduct(string np);
+
+
+        Orders FindLastOrderOfUserAsync(int userId);
+
+        Task addCustomOrder(MenuCustom MC);
+
+
+        Task AddCustomeOrderHasInventroy(MenuCustomHasIventory MCHasInv);
+
+        Task AddPrebuiltOrderHasInventroy(MenuPreBuiltHasInventory MPHasInv);
+      
+
+
+
+
+
+
+
+
+
+
+
     }
 }
+
