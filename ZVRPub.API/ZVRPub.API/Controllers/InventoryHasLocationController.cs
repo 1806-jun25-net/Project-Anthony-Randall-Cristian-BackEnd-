@@ -38,7 +38,6 @@ namespace ZVRPub.API.Controllers
         public string Get(int id)
         {
             return "value";
-            Repo.Update
         }
 
         // POST: api/InventoryHasLocation
