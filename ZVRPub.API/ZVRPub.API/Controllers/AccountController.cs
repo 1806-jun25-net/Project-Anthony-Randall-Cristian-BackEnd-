@@ -68,11 +68,11 @@ namespace ZVRPub.API.Controllers
       
         public async Task<ActionResult> Register(AllUserInfo input,
             [FromServices] UserManager<IdentityUser> userManager,
-            [FromServices] RoleManager<IdentityRole> roleManager, bool admin = false)
+            [FromServices] RoleManager<IdentityRole> roleManager)
         {
             // with an [ApiController], model state is always automatically checked
             // and return 400 if any errors.
-
+            bool admin = input.IsAdmin;
             bool UsernameTaken = Repo.CheckIfUsernameInDatabase(input.Username);
             if (UsernameTaken)
             {
