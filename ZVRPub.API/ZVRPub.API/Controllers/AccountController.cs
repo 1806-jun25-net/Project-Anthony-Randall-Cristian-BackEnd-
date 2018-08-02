@@ -36,8 +36,9 @@ namespace ZVRPub.API.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(403)]
-        public async Task<ActionResult> Login(User input)
+        public async Task<ActionResult> Login(string username, string password)
         {
+            User input = new User { Username = username, UserPassword = password };
             log.Info("Beginning login");
             var result = await _signInManager.PasswordSignInAsync(input.Username, input.UserPassword,
                 isPersistent: false, lockoutOnFailure: false);
