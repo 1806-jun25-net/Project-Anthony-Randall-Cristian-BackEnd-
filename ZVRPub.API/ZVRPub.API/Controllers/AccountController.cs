@@ -19,7 +19,6 @@ namespace ZVRPub.API.Controllers
 
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class AccountController : ControllerBase
     {
         private static readonly Logger log = LogManager.GetCurrentClassLogger();
@@ -183,9 +182,9 @@ namespace ZVRPub.API.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        [Authorize(Roles = ("admin"))]
         public ActionResult UserIsAdmin()
         {
+            var something = User.Identity;
             return NoContent();
         }
     }
