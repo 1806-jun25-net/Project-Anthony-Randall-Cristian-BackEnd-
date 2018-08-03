@@ -124,6 +124,8 @@ namespace ZVRPub.API
 
 
             app.UseMvc();
+
+            app.UseCors();
         }
 
         //private async Task CreateRoles(IServiceProvider serviceProvider)

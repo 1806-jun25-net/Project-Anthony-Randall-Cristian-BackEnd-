@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -52,6 +53,25 @@ namespace ZVRPub.API.Controllers
         //    log.Info("HTTP status code 204 - logging user in");
         //    return NoContent();
         //}
+
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(403)]
+        public async Task<ActionResult> LoginManager(User input)
+        {
+            log.Info("Beginning login");
+            var result = await _signInManager.PasswordSignInAsync(input.Username, input.UserPassword,
+                isPersistent: false, lockoutOnFailure: false);
+
+            if (!result.Succeeded)
+            {
+                log.Info("HTTP Status code 403 - user unable to perform desired action");
+                return StatusCode(403); // Forbidden
+            }
+
+            log.Info("HTTP status code 204 - logging user in");
+            return NoContent();
+        }
 
         [HttpPost]
         [ProducesResponseType(204)]
@@ -154,6 +174,15 @@ namespace ZVRPub.API.Controllers
             await Repo.AddUserAsync(u);
 
             log.Info("User registration successful");
+            return NoContent();
+        }
+
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [Authorize(Roles = ("admin"))]
+        public ActionResult UserIsAdmin()
+        {
             return NoContent();
         }
     }
