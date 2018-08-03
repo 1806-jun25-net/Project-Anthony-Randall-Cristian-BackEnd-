@@ -28,7 +28,7 @@ namespace ZVRPub.API.Controllers
         }
         // GET: api/User
         [HttpGet]
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         public ActionResult<List<Users>> GetAll()
         {
             log.Info("Retreiving all users");
