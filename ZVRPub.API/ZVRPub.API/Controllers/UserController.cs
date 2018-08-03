@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,26 +20,6 @@ namespace ZVRPub.API.Controllers
 
         private readonly IZVRPubRepository Repo;
         private SignInManager<IdentityUser> _signInManager { get; }
-
-        [HttpPost]
-        public async Task<ActionResult<User>> Post(AllUserInfo NewUser)
-        {
-            Users user = new Users
-            {
-                Username = NewUser.Username,
-                FirstName = NewUser.FirstName,
-                LastName = NewUser.LastName,
-                DateOfBirth = NewUser.DateOfBirth,
-                UserAddress = NewUser.UserAddress,
-                PhoneNumber = NewUser.PhoneNumber,
-                Email = NewUser.Email,
-                LevelPermission = false,
-                UserPic = NewUser.UserPic
-            };
-            await Repo.AddUserAsync(user);
-            return NoContent();
-        }
-
 
         public UserController(IZVRPubRepository repo)
         {
@@ -75,6 +56,24 @@ namespace ZVRPub.API.Controllers
             //unused due to lack of need for this functionality
         }
 
-      
+        [HttpPost]
+        public async Task<ActionResult<User>> Post(AllUserInfo NewUser)
+        {
+            Users user = new Users
+            {
+                Username = NewUser.Username,
+                FirstName = NewUser.FirstName,
+                LastName = NewUser.LastName,
+                DateOfBirth = NewUser.DateOfBirth,
+                UserAddress = NewUser.UserAddress,
+                PhoneNumber = NewUser.PhoneNumber,
+                Email = NewUser.Email,
+                LevelPermission = false,
+                UserPic = NewUser.UserPic
+            };
+            await Repo.AddUserAsync(user);
+            return NoContent();
+        }
+
     }
 }
