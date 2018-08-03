@@ -182,6 +182,7 @@ namespace ZVRPub.API.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
+        [Authorize(Roles = "admin")]
         public ActionResult UserIsAdmin()
         {
             var something = User.Identity;
