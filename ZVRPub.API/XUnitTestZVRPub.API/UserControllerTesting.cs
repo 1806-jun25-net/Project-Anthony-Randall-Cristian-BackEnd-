@@ -35,7 +35,9 @@ namespace XUnitTestZVRPub.API
                 UserAddress = "123 Anystreet, Herndon",
                 LevelPermission = true,
                 UserPic = "admin.png",
-                UserId = 1
+                UserId = 1,
+                
+
             };
             var user2 = new Users
             {

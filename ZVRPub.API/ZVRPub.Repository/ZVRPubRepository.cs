@@ -367,6 +367,14 @@ namespace ZVRPub.Repository
             return MenuPre;
         }
 
+        public IEnumerable<MenuPreBuilt> GetAllMenuPreBuilt()
+        {
+            log.Info("Attempting to get MenuPreBuilt");
+            List<MenuPreBuilt> MenuPre = _db.MenuPreBuilt.AsNoTracking().ToList();
+            log.Info("Inventory retreived");
+            return MenuPre;
+        }
+
 
 
 

@@ -20,6 +20,7 @@ namespace ZVRPub.Repository
         Inventory GetInventoriesByName(string ingredient);
         Locations GetLocationByCity(string city);
         Locations GetLocationById(int id);
+        
         IEnumerable<InventoryHasLocation> getLocationInv();
         IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationId(int id);
         IEnumerable<Locations> GetLocations();
@@ -41,6 +42,7 @@ namespace ZVRPub.Repository
         IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationCityID(int id);
         Task InventoryHasLocationUpdateQTYAsync(int idLocation, int idInventory);
         MenuPreBuilt GetMenuPreBuilt(int NewItem);
+        IEnumerable<MenuPreBuilt> GetAllMenuPreBuilt();
         IEnumerable<MenuPreBuilt> GetPreMenuByID();
 
 
