@@ -11,7 +11,7 @@ using ZVRPub.Repository;
 
 namespace ZVRPub.API.Controllers
 {
-    [Route("api/UserPreBuildInv")]
+    [Route("api/UserPreBuildInv/GetUserPreMade/{test}")]
     [ApiController]
     public class UserHaasPreBuildMenuAndInvController : ControllerBase
     {
@@ -27,11 +27,12 @@ namespace ZVRPub.API.Controllers
         }
 
         // GET: api/UserHaasPreBuildMenuAndInv
+
+        // GET: api/Inventory/5
         
-        [HttpGet("{Username}", Name = "GetUserInfo")]
-        public ActionResult<UserHasPreBuildMenuAndInvModel> GetUserPreMade(string username)
+        public ActionResult<UserHasPreBuildMenuAndInvModel> GetUserPreMade(string test)
         {
-            var user = Repo.GetUsers().FirstOrDefault(x => x.Username == username);
+            var user = Repo.GetUserByUsername(test);
             var inv = Repo.GetInventories().ToList();
             var loc = Repo.GetLocations().ToList();
             var userId = user.UserId;
