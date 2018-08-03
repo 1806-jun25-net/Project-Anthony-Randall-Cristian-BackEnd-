@@ -353,7 +353,23 @@ namespace ZVRPub.Repository
             return InventoryHasLocation1;
         }
 
-        
+        public MenuPreBuilt GetMenuPreBuilt(int NewItem)
+        {
+            log.Info("Obtaining single location from location id");
+            return _db.MenuPreBuilt.AsNoTracking().First(l => l.Id == NewItem);
+        }
+
+        public IEnumerable<MenuPreBuilt> GetPreMenuByID()
+        {
+            log.Info("Attempting to get inventory by MenuPreBuilt id");
+            List<MenuPreBuilt> MenuPre = _db.MenuPreBuilt.AsNoTracking().ToList();
+            log.Info("Inventory retreived");
+            return MenuPre;
+        }
+
+
+
+
 
 
 

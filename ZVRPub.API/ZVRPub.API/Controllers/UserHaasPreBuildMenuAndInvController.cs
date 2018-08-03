@@ -27,19 +27,48 @@ namespace ZVRPub.API.Controllers
         }
 
         // GET: api/UserHaasPreBuildMenuAndInv
-        [HttpGet]
+        
+        [HttpGet("{Username}", Name = "GetUserInfo")]
         public ActionResult<UserHasPreBuildMenuAndInvModel> GetUserPreMade(string username)
         {
             var user = Repo.GetUsers().FirstOrDefault(x => x.Username == username);
+            var inv = Repo.GetInventories().ToList();
+            var loc = Repo.GetLocations().ToList();
             var userId = user.UserId;
             var orderList = Repo.GetOrders().Where(x => x.UserId == userId).ToList();
             var getPreOrder = Repo.GetMenuPreBuiltHasOrders().Where(x => x.OrdersId.Equals(orderList.Equals(userId))).ToList();
+            var getPreOrderMenu = Repo.GetPreMenuByID().Where(x => x.Id.Equals(Repo.GetMenuPreBuiltHasOrders().Where(y => y.OrdersId.Equals(orderList.Equals(userId))))).ToList();
 
+            
+            IEnumerable<LocationModel> location2 = loc.Select(x => new LocationModel
+            { Id = x.Id,City = x.City});
+            IEnumerable<InventoryModel> inventory2 = inv.Select(x => new InventoryModel
+            { Id = x.Id, IngredientName = x.IngredientName, Price = x.Price });
+            IEnumerable<OrderModel> order2 = orderList.Select(x => new OrderModel
+            { OrderId = x.OrderId, UserId = x.UserId, LocationId = x.LocationId, OrderTime = x.OrderTime});
+            IEnumerable<MenuPrebuiltHasOrdersModel> PreOr = getPreOrder.Select(x => new MenuPrebuiltHasOrdersModel
+            { Id = x.Id, MenuPreBuildId = x.MenuPreBuildId, OrdersId = x.OrdersId});
+            IEnumerable<MenuPreBuiltModel> PreBuilt = getPreOrderMenu.Select(x => new MenuPreBuiltModel
+            { Id = x.Id, NameOfMenu = x.NameOfMenu, Price = x.Price, TwentyOneOver = x.TwentyOneOver});
+
+
+            UserHasPreBuildMenuAndInvModel model = new UserHasPreBuildMenuAndInvModel
+            {
+                User = user.Username.ToString(),
+                Location = location2,
+                Inventories = inventory2,
+                Order = order2,
+                PreBuilt = PreBuilt,
+                PreBuiltHasOrder = PreOr
+
+            };
+
+            return model;
 
 
 
         }
 
-       
+
     }
 }
