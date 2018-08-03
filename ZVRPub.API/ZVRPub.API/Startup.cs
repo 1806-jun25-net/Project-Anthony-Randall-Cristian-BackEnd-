@@ -101,7 +101,18 @@ namespace ZVRPub.API
                 options.UseSqlServer(Configuration.GetConnectionString("ZVRPubIdentity"),
                     b => b.MigrationsAssembly("ZVRPub.API")));
 
-            services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder =>
+                    {
+                        builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials();
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -123,12 +134,7 @@ namespace ZVRPub.API
             });
 
 
-            app.UseCors(builder =>
-                builder.AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .AllowAnyOrigin()
-                    .AllowCredentials()
-            );
+            app.UseCors("AllowAll");
 
             app.UseMvc();
         }
