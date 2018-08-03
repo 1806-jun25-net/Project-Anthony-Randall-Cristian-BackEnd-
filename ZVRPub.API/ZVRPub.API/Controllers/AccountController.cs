@@ -5,6 +5,7 @@ using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using System.Web.Http.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,7 @@ namespace ZVRPub.API.Controllers
 
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class AccountController : ControllerBase
     {
         private static readonly Logger log = LogManager.GetCurrentClassLogger();
@@ -57,6 +59,7 @@ namespace ZVRPub.API.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(403)]
+        
         public async Task<ActionResult> LoginManager(User input)
         {
             log.Info("Beginning login");
