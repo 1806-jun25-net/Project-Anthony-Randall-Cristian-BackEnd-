@@ -44,8 +44,9 @@ namespace ZVRPub.Repository
         void EditInventoryAsync(InventoryHasLocation inventory);
 
 
+        Inventory GetInventoryByNameOfProduct(string np);
 
-
+        MenuCustom getLastCustom(string CBurger);
 
         IEnumerable<Inventory> GetInventories();
 

@@ -296,13 +296,15 @@ namespace ZVRPub.Repository
             await _db.MenuPreBuiltHasInventory.AddAsync(MPHasInv);
             await _db.SaveChangesAsync();
         }
-    
 
+        public Inventory GetInventoryByNameOfProduct(string np)
+        {
+            return _db.Inventory.FirstOrDefault(o => o.IngredientName.ToLower().Equals(np.ToLower()));
+        }
 
-
-
-
-
-
+        public MenuCustom getLastCustom(string CBurger)
+        {
+            return _db.MenuCustom.LastOrDefault(o => o.NameOfCustomMenu.ToLower().Equals(CBurger.ToLower()));
+        }
     }
 }
