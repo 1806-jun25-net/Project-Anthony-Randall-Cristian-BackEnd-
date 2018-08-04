@@ -167,7 +167,7 @@ namespace ZVRPub.Repository
             return InventoryList;
         }
 
-        public async void EditInventoryAsync(InventoryHasLocation inventory)
+        public async Task EditInventoryAsync(InventoryHasLocation inventory)
         {
             try
             {
@@ -202,7 +202,7 @@ namespace ZVRPub.Repository
             return _db.Inventory.AsNoTracking().FirstOrDefault(u => u.IngredientName.ToLower().Equals(ingredient.ToLower()));
         }
         //Inventory SaveChanges.
-        public async void AddInventoryItem(Inventory NewItem)
+        public async Task AddInventoryItem(Inventory NewItem)
         {
             try
             {
@@ -305,6 +305,11 @@ namespace ZVRPub.Repository
         public MenuCustom getLastCustom(string CBurger)
         {
             return _db.MenuCustom.LastOrDefault(o => o.NameOfCustomMenu.ToLower().Equals(CBurger.ToLower()));
+        }
+        public async Task<InventoryHasLocation> getInventroyByTwoID(int loc, int inv)
+        {
+            return await _db.InventoryHasLocation.FirstOrDefaultAsync(item => (item.LocationId == loc && item.InventoryId == inv));
+           
         }
     }
 }

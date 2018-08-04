@@ -41,7 +41,7 @@ namespace ZVRPub.Repository
         IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationId(int id);
 
 
-        void EditInventoryAsync(InventoryHasLocation inventory);
+        Task EditInventoryAsync(InventoryHasLocation inventory);
 
 
         Inventory GetInventoryByNameOfProduct(string np);
@@ -53,7 +53,7 @@ namespace ZVRPub.Repository
         Inventory GetInventoriesByName(string ingredient);
 
         //Inventory SaveChanges.
-        void AddInventoryItem(Inventory NewItem);
+        Task AddInventoryItem(Inventory NewItem);
 
         Task addPreMenuOrder(MenuPrebuiltHasOrders menu);
 
@@ -80,9 +80,10 @@ namespace ZVRPub.Repository
         Task AddCustomeOrderHasInventroy(MenuCustomHasIventory MCHasInv);
 
         Task AddPrebuiltOrderHasInventroy(MenuPreBuiltHasInventory MPHasInv);
+
+
+        Task<InventoryHasLocation> getInventroyByTwoID(int loc, int inv);
       
-
-
 
 
 
