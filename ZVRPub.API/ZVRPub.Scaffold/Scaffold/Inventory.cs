@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ZVRPub.Scaffold
 {
@@ -20,5 +21,10 @@ namespace ZVRPub.Scaffold
         public ICollection<InventoryHasLocation> InventoryHasLocation { get; set; }
         public ICollection<MenuCustomHasIventory> MenuCustomHasIventory { get; set; }
         public ICollection<MenuPreBuiltHasInventory> MenuPreBuiltHasInventory { get; set; }
+
+        public static explicit operator Inventory(Task<Inventory> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

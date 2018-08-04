@@ -122,12 +122,12 @@ namespace XUnitTestZVRPub.API
             var controller = new InventoryController(repoMock.Object);
             var result = controller.Get("Coke");
 
-            Assert.NotNull(result.Value);
-            Assert.Same(inventory4, result.Value);
-            Assert.NotSame(inventory1, result.Value);
-            Assert.NotSame(inventory2, result.Value);
-            Assert.NotSame(inventory3, result.Value);
-            Assert.NotSame(inventory5, result.Value);
+            Assert.NotNull(result.Result);
+            Assert.Same(inventory4, result.Result);
+            Assert.NotSame(inventory1, result.Result);
+            Assert.NotSame(inventory2, result.Result);
+            Assert.NotSame(inventory3, result.Result);
+            Assert.NotSame(inventory5, result.Result);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using ZVRPub.Scaffold;
 
@@ -7,102 +6,45 @@ namespace ZVRPub.Repository
 {
     public interface IZVRPubRepository
     {
-
-        IEnumerable<Users> GetUsers();
-
-        Task AddUserAsync(Users user);
-
-        Users GetUserByUsername(string username);
-
-        bool CheckIfUsernameInDatabase(string CheckName);
-
-        IEnumerable<Locations> GetLocations();
-
-
-        void AddLocationAsync(Locations loc);
-
-
-        Locations GetLocationById(int id);
-
-
-        Locations GetLocationByCity(string city);
-
-        IEnumerable<Orders> GetOrders();
-
-
-        IEnumerable<Orders> GetOrdersByLocation(int id);
-
-        IEnumerable<Orders> GetOrdersByUsername(string user);
-
-
-        Task AddOrderAsync(Orders NewOrder);
-
-
-        IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationId(int id);
-
-
-        void EditInventoryAsync(InventoryHasLocation inventory);
-
-
-        Inventory GetInventoryByNameOfProduct(string np);
-
-        Task<MenuCustom> getLastCustom(string CBurger);
-
-        IEnumerable<Inventory> GetInventories();
-
-        Task<Inventory> GetInventoriesByName(string ingredient);
-
-        //Inventory SaveChanges.
-        void AddInventoryItem(Inventory NewItem);
-
-        Task addPreMenuOrder(MenuPrebuiltHasOrders menu);
-
-
-
-
-
-        Task addPremadeItemInOrder(int OrderId, int PreID);
-
-
-        IEnumerable<MenuPrebuiltHasOrders> GetMenuPreBuiltHasOrders();
-
-
-        Task<MenuPreBuilt> GetPreMenuByNameOfProduct(string np);
-
-
-        Orders FindLastOrderOfUserAsync(int userId);
-
-        Task addCustomOrder(MenuCustom MC);
-
-
         Task AddCustomeOrderHasInventroy(MenuCustomHasIventory MCHasInv);
-
+        Task addCustomOrder(MenuCustom MC);
+        void AddInventoryItem(Inventory NewItem);
+        void AddLocationAsync(Locations loc);
+        Task AddOrderAsync(Orders NewOrder);
         Task AddPrebuiltOrderHasInventroy(MenuPreBuiltHasInventory MPHasInv);
-        
+        Task addPremadeItemInOrder(int OrderId, int PreID);
+        Task addPreMenuOrder(MenuPrebuiltHasOrders menu);
+        Task AddUserAsync(Users user);
+        bool CheckIfUsernameInDatabase(string CheckName);
+        void EditInventoryAsync(InventoryHasLocation inventory);
+        Orders FindLastOrderOfUserAsync(int userId);
+        IEnumerable<InventoryHasLocation> GetAllLocationInventoryByLocation();
+        IEnumerable<MenuPreBuilt> GetAllMenuPreBuilt();
+        IEnumerable<Inventory> GetInventories();
+        Inventory GetInventoriesByName(string ingredient);
+        Inventory GetInventoryByNameOfProduct(string np);
+        Task<MenuCustom> getLastCustom(string CBurger);
+        Locations GetLocationByCity(string city);
+        Locations GetLocationById(int id);
+        IEnumerable<InventoryHasLocation> getLocationInv();
+        IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationCityID(int id);
+        IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationId(int id);
+        IEnumerable<Locations> GetLocations();
+        MenuPreBuilt GetMenuPreBuilt(int NewItem);
+        IEnumerable<MenuPrebuiltHasOrders> GetMenuPreBuiltHasOrders();
+        IEnumerable<LocationOrderProcess> GetOrderProcesses();
+        IEnumerable<Orders> GetOrders();
+        IEnumerable<Orders> GetOrdersByLocation(int id);
+        IEnumerable<Orders> GetOrdersByUsername(string user);
+        IEnumerable<MenuPreBuilt> GetPreMenuByID();
+        Task<MenuPreBuilt> GetPreMenuByNameOfProduct(string np);
+        Users GetUserByUserById(int id);
+        Users GetUserByUsername(string username);
+        IEnumerable<Users> GetUsers();
+        Task InventoryHasLocationUpdateQTYAsync(int idLocation, int idInventory);
+        InventoryHasLocation invHasLoc(int id, int qty);
         void Save();
-
         void UpdatePreBuiltMenu(string v1, int v2);
         Task UpdateUser(Users u);
-        Users GetUserByUserById(int id);
-        InventoryHasLocation invHasLoc(int id, int qty);
-        IEnumerable<InventoryHasLocation> GetAllLocationInventoryByLocation();
-        IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationCityID(int id);
-        Task InventoryHasLocationUpdateQTYAsync(int idLocation, int idInventory);
-        MenuPreBuilt GetMenuPreBuilt(int NewItem);
-        IEnumerable<MenuPreBuilt> GetAllMenuPreBuilt();
-        IEnumerable<MenuPreBuilt> GetPreMenuByID();
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }
-

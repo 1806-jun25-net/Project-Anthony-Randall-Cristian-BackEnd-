@@ -6,11 +6,7 @@ using Xunit;
 using ZVRPub.API.Controllers;
 using ZVRPub.Repository;
 using ZVRPub.Scaffold;
-using Xunit;
 using ZVRPub.API;
-using ZVRPub.API.Controllers;
-using ZVRPub.Repository;
-using ZVRPub.Scaffold;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace XUnitTestZVRPub.API
