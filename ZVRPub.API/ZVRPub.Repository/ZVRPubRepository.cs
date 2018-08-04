@@ -196,10 +196,10 @@ namespace ZVRPub.Repository
             log.Info("Inventories obtained");
             return InventoryList;
         }
-        public Inventory GetInventoriesByName(string ingredient)
+        public async Task<Inventory> GetInventoriesByName(string ingredient)
         {
             log.Info("Obtaining ingredient with given name");
-            return _db.Inventory.AsNoTracking().FirstOrDefault(u => u.IngredientName.ToLower().Equals(ingredient.ToLower()));
+            return await _db.Inventory.AsNoTracking().FirstOrDefaultAsync(u => u.IngredientName.ToLower().Equals(ingredient.ToLower()));
         }
         //Inventory SaveChanges.
         public async void AddInventoryItem(Inventory NewItem)
@@ -227,10 +227,6 @@ namespace ZVRPub.Repository
             await _db.SaveChangesAsync();
         }
 
-        public Orders FindOrdersByDate(DateTime DO)
-        {
-            return _db.Orders.FirstOrDefault(x => x.OrderTime.ToLongTimeString().Equals(DO.ToLongTimeString()));
-        }
 
         public IEnumerable<InventoryHasLocation> getLocationInv()
         {
@@ -273,9 +269,9 @@ namespace ZVRPub.Repository
         }
 
 
-        public MenuPreBuilt GetPreMenuByNameOfProduct(string np){
+        public async Task<MenuPreBuilt> GetPreMenuByNameOfProduct(string np){
 
-            return _db.MenuPreBuilt.FirstOrDefault(o => o.NameOfMenu.ToLower().Equals( np.ToLower()));
+            return await _db.MenuPreBuilt.FirstOrDefaultAsync(o => o.NameOfMenu.ToLower().Equals( np.ToLower()));
             }
 
         public Orders FindLastOrderOfUserAsync(int userId) { return _db.Orders.AsNoTracking().LastOrDefault(u => u.UserId == userId); }
@@ -302,9 +298,9 @@ namespace ZVRPub.Repository
             return _db.Inventory.FirstOrDefault(o => o.IngredientName.ToLower().Equals(np.ToLower()));
         }
 
-        public MenuCustom getLastCustom(string CBurger)
+        public async Task<MenuCustom> getLastCustom(string CBurger)
         {
-            return _db.MenuCustom.LastOrDefault(o => o.NameOfCustomMenu.ToLower().Equals(CBurger.ToLower()));
+            return await _db.MenuCustom.LastOrDefaultAsync(o => o.NameOfCustomMenu.ToLower().Equals(CBurger.ToLower()));
         }
     }
 }

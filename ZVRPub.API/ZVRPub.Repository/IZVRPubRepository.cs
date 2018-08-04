@@ -46,19 +46,17 @@ namespace ZVRPub.Repository
 
         Inventory GetInventoryByNameOfProduct(string np);
 
-        MenuCustom getLastCustom(string CBurger);
+        Task<MenuCustom> getLastCustom(string CBurger);
 
         IEnumerable<Inventory> GetInventories();
 
-        Inventory GetInventoriesByName(string ingredient);
+        Task<Inventory> GetInventoriesByName(string ingredient);
 
         //Inventory SaveChanges.
         void AddInventoryItem(Inventory NewItem);
 
         Task addPreMenuOrder(MenuPrebuiltHasOrders menu);
 
-
-        Orders FindOrdersByDate(DateTime DO);
 
 
 
@@ -69,7 +67,7 @@ namespace ZVRPub.Repository
         IEnumerable<MenuPrebuiltHasOrders> GetMenuPreBuiltHasOrders();
 
 
-        MenuPreBuilt GetPreMenuByNameOfProduct(string np);
+        Task<MenuPreBuilt> GetPreMenuByNameOfProduct(string np);
 
 
         Orders FindLastOrderOfUserAsync(int userId);

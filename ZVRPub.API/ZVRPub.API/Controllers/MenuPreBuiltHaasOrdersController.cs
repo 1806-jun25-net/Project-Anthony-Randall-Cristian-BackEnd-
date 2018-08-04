@@ -43,11 +43,11 @@ namespace ZVRPub.API.Controllers
         [HttpPost]
         public async Task PostAsync(MHO mHO)
         {
-            var o = Repo.FindOrdersByDate(mHO.OrderTime);
+          //  var o = Repo.FindOrdersByDate(mHO.OrderTime);
             var m = Repo.GetPreMenuByNameOfProduct(mHO.NameOfProduct);
             var Menu = new MenuPrebuiltHasOrders
             {
-               OrdersId = o.OrderId,
+              // OrdersId = o.OrderId,
                MenuPreBuildId = m.Id
             };
            await Repo.addPreMenuOrder(Menu);
