@@ -167,7 +167,7 @@ namespace ZVRPub.Repository
             return InventoryList;
         }
 
-        public async void EditInventoryAsync(InventoryHasLocation inventory)
+        public async Task EditInventoryAsync(InventoryHasLocation inventory)
         {
             try
             {
@@ -378,10 +378,10 @@ namespace ZVRPub.Repository
             return MenuPre;
         }
 
+        public async Task<InventoryHasLocation> getInventroyByTwoID(int loc, int inv)
+        {
+            return await _db.InventoryHasLocation.FirstOrDefaultAsync(item => (item.LocationId == loc && item.InventoryId == inv));
 
-
-
-
-
+        }
     }
 }
