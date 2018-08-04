@@ -21,9 +21,10 @@ namespace ZVRPub.Repository
         IEnumerable<InventoryHasLocation> GetAllLocationInventoryByLocation();
         IEnumerable<MenuPreBuilt> GetAllMenuPreBuilt();
         IEnumerable<Inventory> GetInventories();
-        Task<Inventory> GetInventoriesByNameAsync(string ingredient);
         Inventory GetInventoriesByName(string ingredient);
+        Task<Inventory> GetInventoriesByNameAsync(string ingredient);
         Inventory GetInventoryByNameOfProduct(string np);
+        Task<InventoryHasLocation> getInventroyByTwoID(int locId, int invid);
         Task<MenuCustom> getLastCustom(string CBurger);
         Locations GetLocationByCity(string city);
         Locations GetLocationById(int id);
@@ -47,6 +48,5 @@ namespace ZVRPub.Repository
         void Save();
         void UpdatePreBuiltMenu(string v1, int v2);
         Task UpdateUser(Users u);
-        Task<InventoryHasLocation> getInventroyByTwoID(int locId, int invid);
     }
 }

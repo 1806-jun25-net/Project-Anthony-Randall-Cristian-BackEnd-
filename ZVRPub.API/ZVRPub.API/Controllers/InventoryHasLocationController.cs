@@ -34,10 +34,11 @@ namespace ZVRPub.API.Controllers
         }
 
         // GET: api/InventoryHasLocation/5
-        [HttpGet("{id}", Name = "GetInventoryHasLocation")]
-        public string Get(int id)
+        [HttpGet("{city}", Name = "GetInventoryHasLocation")]
+        public IEnumerable<InventoryHasLocation> Get([FromQuery]string city)
         {
-            return "value";
+            Locations loc = Repo.GetLocationByCity(city);
+            return Repo.GetLocationInventoryByLocationId(loc.Id);
         }
 
         // POST: api/InventoryHasLocation
