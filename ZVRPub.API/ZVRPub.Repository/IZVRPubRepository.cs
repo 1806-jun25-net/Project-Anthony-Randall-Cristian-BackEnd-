@@ -46,7 +46,7 @@ namespace ZVRPub.Repository
 
         Inventory GetInventoryByNameOfProduct(string np);
 
-        MenuCustom GetLastCustom(string CBurger);
+        MenuCustom getLastCustom(string CBurger);
 
         IEnumerable<Inventory> GetInventories();
 
