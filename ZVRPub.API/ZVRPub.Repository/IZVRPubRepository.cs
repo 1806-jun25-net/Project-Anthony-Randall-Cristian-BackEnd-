@@ -16,12 +16,12 @@ namespace ZVRPub.Repository
         Task addPreMenuOrder(MenuPrebuiltHasOrders menu);
         Task AddUserAsync(Users user);
         bool CheckIfUsernameInDatabase(string CheckName);
-        void EditInventoryAsync(InventoryHasLocation inventory);
-        Orders FindLastOrderOfUserAsync(int userId);
+        Task EditInventoryAsync(InventoryHasLocation inventory);
+        Task<Orders> FindLastOrderOfUserAsync(int userId);
         IEnumerable<InventoryHasLocation> GetAllLocationInventoryByLocation();
         IEnumerable<MenuPreBuilt> GetAllMenuPreBuilt();
         IEnumerable<Inventory> GetInventories();
-        Inventory GetInventoriesByName(string ingredient);
+        Task<Inventory> GetInventoriesByName(string ingredient);
         Inventory GetInventoryByNameOfProduct(string np);
         Task<MenuCustom> getLastCustom(string CBurger);
         Locations GetLocationByCity(string city);
@@ -46,5 +46,6 @@ namespace ZVRPub.Repository
         void Save();
         void UpdatePreBuiltMenu(string v1, int v2);
         Task UpdateUser(Users u);
+        Task<InventoryHasLocation> getInventroyByTwoID(int locId, int invid);
     }
 }

@@ -35,10 +35,10 @@ namespace ZVRPub.API.Controllers
 
         // GET: api/Inventory/5
         [HttpGet("{id}", Name = "GetInventory")]
-        public ActionResult<Inventory> Get(string name)
+        public async Task<ActionResult<Inventory>> GetAsync(string name)
         {
             log.Info("Retreiving inventory from database based on ingredient name");
-            return Repo.GetInventoriesByName(name);
+            return await Repo.GetInventoriesByName(name);
         }
 
 

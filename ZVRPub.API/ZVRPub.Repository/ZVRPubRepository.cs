@@ -167,7 +167,7 @@ namespace ZVRPub.Repository
             return InventoryList;
         }
 
-        public async void EditInventoryAsync(InventoryHasLocation inventory)
+        public async Task EditInventoryAsync(InventoryHasLocation inventory)
         {
             try
             {
@@ -196,10 +196,10 @@ namespace ZVRPub.Repository
             log.Info("Inventories obtained");
             return InventoryList;
         }
-        public Inventory GetInventoriesByName(string ingredient)
+        public async Task<Inventory> GetInventoriesByName(string ingredient)
         {
             log.Info("Obtaining ingredient with given name");
-            return  _db.Inventory.AsNoTracking().FirstOrDefault(u => u.IngredientName.ToLower().Equals(ingredient.ToLower()));
+            return await  _db.Inventory.AsNoTracking().FirstOrDefaultAsync(u => u.IngredientName.ToLower().Equals(ingredient.ToLower()));
         }
         //Inventory SaveChanges.
         public async void AddInventoryItem(Inventory NewItem)
@@ -274,7 +274,7 @@ namespace ZVRPub.Repository
             return await _db.MenuPreBuilt.FirstOrDefaultAsync(o => o.NameOfMenu.ToLower().Equals( np.ToLower()));
             }
 
-        public Orders FindLastOrderOfUserAsync(int userId) { return _db.Orders.AsNoTracking().LastOrDefault(u => u.UserId == userId); }
+        public async Task<Orders> FindLastOrderOfUserAsync(int userId) { return await _db.Orders.AsNoTracking().LastOrDefaultAsync(u => u.UserId == userId); }
 
         public async Task addCustomOrder(MenuCustom MC)
         {
@@ -378,10 +378,10 @@ namespace ZVRPub.Repository
             return MenuPre;
         }
 
+        public async Task<InventoryHasLocation> getInventroyByTwoID(int locId, int invid)
+        {
+            return await _db.InventoryHasLocation.FirstOrDefaultAsync(o => o.InventoryId == invid && o.LocationId == locId);
 
-
-
-
-
+        }
     }
 }

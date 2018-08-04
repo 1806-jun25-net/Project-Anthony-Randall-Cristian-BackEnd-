@@ -120,7 +120,7 @@ namespace XUnitTestZVRPub.API
             repoMock.Setup(c => c.GetInventoriesByName("Coke")).Returns(inventory4);
 
             var controller = new InventoryController(repoMock.Object);
-            var result = controller.Get("Coke");
+            var result = controller.GetAsync("Coke");
 
             Assert.NotNull(result.Result);
             Assert.Same(inventory4, result.Result);
