@@ -47,7 +47,7 @@ namespace ZVRPub.API.Controllers
             
         }
 
-        public void addCustomBurger(bool check, string nameofproduct, int orderid)
+        public async Task addCustomBurger(bool check, string nameofproduct, int orderid)
         {
             var CustomeBurger = new MenuCustom()
             {
@@ -57,7 +57,7 @@ namespace ZVRPub.API.Controllers
             if (check)
             {
                
-                Repo.addCustomOrder(CustomeBurger); 
+               await  Repo.addCustomOrder(CustomeBurger); 
 
             }
         }
@@ -91,16 +91,16 @@ namespace ZVRPub.API.Controllers
             //items into order 
             if (value.CustomBurgerYes)
             {
-                addCustomBurger(value.CustomBurgerYes, value.Custom_Burger, LastOrderOfUser.OrderId);
+                await addCustomBurger(value.CustomBurgerYes, value.Custom_Burger, LastOrderOfUser.OrderId);
 
-                var cb = Repo.getLastCustom(value.Custom_Burger);
-                var buns = Repo.GetInventoriesByName("buns");
-                var patties = Repo.GetInventoriesByName("patties");
-                var cheese = Repo.GetInventoriesByName("cheese");
-                var Inv = Repo.GetInventoriesByName(value.ingredient);
-                var Inv1 = Repo.GetInventoriesByName(value.ingredient1);
-                var Inv2 = Repo.GetInventoriesByName(value.ingredient2);
-                var Inv3 = Repo.GetInventoriesByName(value.ingredient3);
+                var cb = await Repo.getLastCustom(value.Custom_Burger);
+                var buns = await Repo.GetInventoriesByName("buns");
+                var patties = await Repo.GetInventoriesByName("patties");
+                var cheese = await Repo.GetInventoriesByName("cheese");
+                var Inv = await Repo.GetInventoriesByName(value.ingredient);
+                var Inv1 = await Repo.GetInventoriesByName(value.ingredient1);
+                var Inv2 = await Repo.GetInventoriesByName(value.ingredient2);
+                var Inv3 =await Repo.GetInventoriesByName(value.ingredient3);
                await CustomUsesInventory(cb.Id, buns.Id);
                await CustomUsesInventory(cb.Id, patties.Id);
                await CustomUsesInventory(cb.Id, cheese.Id);
@@ -132,7 +132,7 @@ namespace ZVRPub.API.Controllers
         
         public async Task addPreMadeItem(bool Item, int qty, string nameOfProduct, int orderid, int locid)
         {
-           var addPreMadeItem  = Repo.GetPreMenuByNameOfProduct(nameOfProduct);
+           var addPreMadeItem  = await Repo.GetPreMenuByNameOfProduct(nameOfProduct);
             if (Item)
             {
                 for (int i = 0; i< qty; i++)
@@ -177,7 +177,7 @@ namespace ZVRPub.API.Controllers
 
         public async Task somesortofthing(string item, int PremadeId, int loc)
         {
-            var inc = Repo.GetInventoriesByName(item);
+            var inc = await Repo.GetInventoriesByName(item);
             var invhaspre = new MenuPreBuiltHasInventory()
             {
                 InventoryId = inc.Id,

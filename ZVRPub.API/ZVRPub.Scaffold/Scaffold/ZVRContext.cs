@@ -21,6 +21,7 @@ namespace ZVRPub.Scaffold
         public virtual DbSet<Locations> Locations { get; set; }
         public virtual DbSet<MenuCustom> MenuCustom { get; set; }
         public virtual DbSet<MenuCustomHasIventory> MenuCustomHasIventory { get; set; }
+        public virtual DbSet<MenuCustomHasOrders> MenuCustomHasOrders { get; set; }
         public virtual DbSet<MenuPreBuilt> MenuPreBuilt { get; set; }
         public virtual DbSet<MenuPreBuiltHasInventory> MenuPreBuiltHasInventory { get; set; }
         public virtual DbSet<MenuPrebuiltHasOrders> MenuPrebuiltHasOrders { get; set; }
@@ -146,6 +147,19 @@ namespace ZVRPub.Scaffold
                     .HasConstraintName("FK_MenuCustom_ID");
             });
 
+            modelBuilder.Entity<MenuCustomHasOrders>(entity =>
+            {
+                entity.ToTable("MenuCustom_Has_Orders", "ZRV_Pub");
+
+                entity.Property(e => e.CustomPreBuildId).HasColumnName("CustomPreBuildID");
+
+                entity.HasOne(d => d.Orders)
+                    .WithMany(p => p.MenuCustomHasOrders)
+                    .HasForeignKey(d => d.OrdersId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Orders2_ID");
+            });
+
             modelBuilder.Entity<MenuPreBuilt>(entity =>
             {
                 entity.Property(e => e.NameOfMenu)
@@ -191,6 +205,10 @@ namespace ZVRPub.Scaffold
 
                 entity.ToTable("Orders", "ZRV_Pub");
 
+                entity.Property(e => e.Cost).HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.OrderTime).HasColumnType("datetime2(0)");
+
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.UserId)
@@ -204,16 +222,8 @@ namespace ZVRPub.Scaffold
 
                 entity.ToTable("Users", "ZRV_Pub");
 
-                entity.HasIndex(e => e.Email)
-                    .HasName("UQ__Users__A9D1053418BC91B9")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.PhoneNumber)
-                    .HasName("UQ__Users__85FB4E3865A36112")
-                    .IsUnique();
-
                 entity.HasIndex(e => e.Username)
-                    .HasName("UQ__Users__536C85E407AFB0C2")
+                    .HasName("UC_username_unique")
                     .IsUnique();
 
                 entity.Property(e => e.Email)

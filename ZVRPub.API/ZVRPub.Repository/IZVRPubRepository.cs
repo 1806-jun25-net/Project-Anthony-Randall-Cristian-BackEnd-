@@ -41,24 +41,22 @@ namespace ZVRPub.Repository
         IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationId(int id);
 
 
-        Task EditInventoryAsync(InventoryHasLocation inventory);
+        void EditInventoryAsync(InventoryHasLocation inventory);
 
 
         Inventory GetInventoryByNameOfProduct(string np);
 
-        MenuCustom getLastCustom(string CBurger);
+        Task<MenuCustom> getLastCustom(string CBurger);
 
         IEnumerable<Inventory> GetInventories();
 
-        Inventory GetInventoriesByName(string ingredient);
+        Task<Inventory> GetInventoriesByName(string ingredient);
 
         //Inventory SaveChanges.
-        Task AddInventoryItem(Inventory NewItem);
+        void AddInventoryItem(Inventory NewItem);
 
         Task addPreMenuOrder(MenuPrebuiltHasOrders menu);
 
-
-        Orders FindOrdersByDate(DateTime DO);
 
 
 
@@ -69,7 +67,7 @@ namespace ZVRPub.Repository
         IEnumerable<MenuPrebuiltHasOrders> GetMenuPreBuiltHasOrders();
 
 
-        MenuPreBuilt GetPreMenuByNameOfProduct(string np);
+        Task<MenuPreBuilt> GetPreMenuByNameOfProduct(string np);
 
 
         Orders FindLastOrderOfUserAsync(int userId);
@@ -80,10 +78,22 @@ namespace ZVRPub.Repository
         Task AddCustomeOrderHasInventroy(MenuCustomHasIventory MCHasInv);
 
         Task AddPrebuiltOrderHasInventroy(MenuPreBuiltHasInventory MPHasInv);
+        
+        void Save();
+
+        void UpdatePreBuiltMenu(string v1, int v2);
+        Task UpdateUser(Users u);
+        Users GetUserByUserById(int id);
+        InventoryHasLocation invHasLoc(int id, int qty);
+        IEnumerable<InventoryHasLocation> GetAllLocationInventoryByLocation();
+        IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationCityID(int id);
+        Task InventoryHasLocationUpdateQTYAsync(int idLocation, int idInventory);
+        MenuPreBuilt GetMenuPreBuilt(int NewItem);
+        IEnumerable<MenuPreBuilt> GetAllMenuPreBuilt();
+        IEnumerable<MenuPreBuilt> GetPreMenuByID();
 
 
-        Task<InventoryHasLocation> getInventroyByTwoID(int loc, int inv);
-      
+
 
 
 

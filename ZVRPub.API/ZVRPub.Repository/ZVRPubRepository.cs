@@ -167,7 +167,7 @@ namespace ZVRPub.Repository
             return InventoryList;
         }
 
-        public async Task EditInventoryAsync(InventoryHasLocation inventory)
+        public async void EditInventoryAsync(InventoryHasLocation inventory)
         {
             try
             {
@@ -196,13 +196,13 @@ namespace ZVRPub.Repository
             log.Info("Inventories obtained");
             return InventoryList;
         }
-        public Inventory GetInventoriesByName(string ingredient)
+        public async Task<Inventory> GetInventoriesByName(string ingredient)
         {
             log.Info("Obtaining ingredient with given name");
-            return _db.Inventory.AsNoTracking().FirstOrDefault(u => u.IngredientName.ToLower().Equals(ingredient.ToLower()));
+            return await _db.Inventory.AsNoTracking().FirstOrDefaultAsync(u => u.IngredientName.ToLower().Equals(ingredient.ToLower()));
         }
         //Inventory SaveChanges.
-        public async Task AddInventoryItem(Inventory NewItem)
+        public async void AddInventoryItem(Inventory NewItem)
         {
             try
             {
@@ -227,10 +227,6 @@ namespace ZVRPub.Repository
             await _db.SaveChangesAsync();
         }
 
-        public Orders FindOrdersByDate(DateTime DO)
-        {
-            return _db.Orders.FirstOrDefault(x => x.OrderTime.ToLongTimeString().Equals(DO.ToLongTimeString()));
-        }
 
         public IEnumerable<InventoryHasLocation> getLocationInv()
         {
@@ -273,9 +269,9 @@ namespace ZVRPub.Repository
         }
 
 
-        public MenuPreBuilt GetPreMenuByNameOfProduct(string np){
+        public async Task<MenuPreBuilt> GetPreMenuByNameOfProduct(string np){
 
-            return _db.MenuPreBuilt.FirstOrDefault(o => o.NameOfMenu.ToLower().Equals( np.ToLower()));
+            return await _db.MenuPreBuilt.FirstOrDefaultAsync(o => o.NameOfMenu.ToLower().Equals( np.ToLower()));
             }
 
         public Orders FindLastOrderOfUserAsync(int userId) { return _db.Orders.AsNoTracking().LastOrDefault(u => u.UserId == userId); }
@@ -302,14 +298,90 @@ namespace ZVRPub.Repository
             return _db.Inventory.FirstOrDefault(o => o.IngredientName.ToLower().Equals(np.ToLower()));
         }
 
-        public MenuCustom getLastCustom(string CBurger)
+        public async Task<MenuCustom> getLastCustom(string CBurger)
         {
-            return _db.MenuCustom.LastOrDefault(o => o.NameOfCustomMenu.ToLower().Equals(CBurger.ToLower()));
+            return await _db.MenuCustom.LastOrDefaultAsync(o => o.NameOfCustomMenu.ToLower().Equals(CBurger.ToLower()));
         }
-        public async Task<InventoryHasLocation> getInventroyByTwoID(int loc, int inv)
+
+        public Users GetUserByUserById(int id)
         {
-            return await _db.InventoryHasLocation.FirstOrDefaultAsync(item => (item.LocationId == loc && item.InventoryId == inv));
-           
+            log.Info("Retreiving user from database with given username");
+            return _db.Users.AsNoTracking().FirstOrDefault(u => u.UserId.Equals(id));
         }
+        
+        public IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationCityID(int id)
+        {
+            log.Info("Attempting to get inventory by location id");
+            List<InventoryHasLocation> InventoryList = _db.InventoryHasLocation.AsNoTracking().Where(i => i.LocationId == id).ToList();
+            log.Info("Inventory retreived");
+
+            return InventoryList;
+        }
+
+
+        public InventoryHasLocation invHasLoc(int id, int qty)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task InventoryHasLocationUpdateQTYAsync(int idLocation, int idInventory)
+        {
+            var allInventoryLoc = _db.InventoryHasLocation.AsNoTracking().FirstOrDefault(u => u.LocationId.Equals(idLocation) && u.InventoryId.Equals(idInventory));
+            allInventoryLoc.Quantity -= 1;
+            try
+            {
+                log.Info("Attempting to edit inventory");
+                _db.Update(allInventoryLoc);
+                await _db.SaveChangesAsync();
+                log.Info("Inventory updated");
+            }
+
+            catch (Exception ex)
+            {
+                log.Info("Exception thrown");
+                log.Info(ex.Message);
+                log.Info(ex.StackTrace);
+            }
+        }
+
+
+
+
+
+        public IEnumerable<InventoryHasLocation> GetAllLocationInventoryByLocation()
+        {
+            log.Info("Obtaining all inventory has location from database");
+            List<InventoryHasLocation> InventoryHasLocation1 = _db.InventoryHasLocation.AsNoTracking().ToList();
+            log.Info("Inventory obtained");
+            return InventoryHasLocation1;
+        }
+
+        public MenuPreBuilt GetMenuPreBuilt(int NewItem)
+        {
+            log.Info("Obtaining single location from location id");
+            return _db.MenuPreBuilt.AsNoTracking().First(l => l.Id == NewItem);
+        }
+
+        public IEnumerable<MenuPreBuilt> GetPreMenuByID()
+        {
+            log.Info("Attempting to get inventory by MenuPreBuilt id");
+            List<MenuPreBuilt> MenuPre = _db.MenuPreBuilt.AsNoTracking().ToList();
+            log.Info("Inventory retreived");
+            return MenuPre;
+        }
+
+        public IEnumerable<MenuPreBuilt> GetAllMenuPreBuilt()
+        {
+            log.Info("Attempting to get MenuPreBuilt");
+            List<MenuPreBuilt> MenuPre = _db.MenuPreBuilt.AsNoTracking().ToList();
+            log.Info("Inventory retreived");
+            return MenuPre;
+        }
+
+
+
+
+
+
     }
 }
