@@ -80,7 +80,20 @@ namespace ZVRPub.Repository
         Task AddCustomeOrderHasInventroy(MenuCustomHasIventory MCHasInv);
 
         Task AddPrebuiltOrderHasInventroy(MenuPreBuiltHasInventory MPHasInv);
-      
+        
+        void Save();
+
+        void UpdatePreBuiltMenu(string v1, int v2);
+        Task UpdateUser(Users u);
+        Users GetUserByUserById(int id);
+        InventoryHasLocation invHasLoc(int id, int qty);
+        IEnumerable<InventoryHasLocation> GetAllLocationInventoryByLocation();
+        IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationCityID(int id);
+        Task InventoryHasLocationUpdateQTYAsync(int idLocation, int idInventory);
+        MenuPreBuilt GetMenuPreBuilt(int NewItem);
+        IEnumerable<MenuPreBuilt> GetAllMenuPreBuilt();
+        IEnumerable<MenuPreBuilt> GetPreMenuByID();
+
 
 
 

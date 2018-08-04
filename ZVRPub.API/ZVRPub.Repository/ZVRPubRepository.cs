@@ -306,5 +306,86 @@ namespace ZVRPub.Repository
         {
             return _db.MenuCustom.LastOrDefault(o => o.NameOfCustomMenu.ToLower().Equals(CBurger.ToLower()));
         }
+
+        public Users GetUserByUserById(int id)
+        {
+            log.Info("Retreiving user from database with given username");
+            return _db.Users.AsNoTracking().FirstOrDefault(u => u.UserId.Equals(id));
+        }
+        
+        public IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationCityID(int id)
+        {
+            log.Info("Attempting to get inventory by location id");
+            List<InventoryHasLocation> InventoryList = _db.InventoryHasLocation.AsNoTracking().Where(i => i.LocationId == id).ToList();
+            log.Info("Inventory retreived");
+
+            return InventoryList;
+        }
+
+
+        public InventoryHasLocation invHasLoc(int id, int qty)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task InventoryHasLocationUpdateQTYAsync(int idLocation, int idInventory)
+        {
+            var allInventoryLoc = _db.InventoryHasLocation.AsNoTracking().FirstOrDefault(u => u.LocationId.Equals(idLocation) && u.InventoryId.Equals(idInventory));
+            allInventoryLoc.Quantity -= 1;
+            try
+            {
+                log.Info("Attempting to edit inventory");
+                _db.Update(allInventoryLoc);
+                await _db.SaveChangesAsync();
+                log.Info("Inventory updated");
+            }
+
+            catch (Exception ex)
+            {
+                log.Info("Exception thrown");
+                log.Info(ex.Message);
+                log.Info(ex.StackTrace);
+            }
+        }
+
+
+
+
+
+        public IEnumerable<InventoryHasLocation> GetAllLocationInventoryByLocation()
+        {
+            log.Info("Obtaining all inventory has location from database");
+            List<InventoryHasLocation> InventoryHasLocation1 = _db.InventoryHasLocation.AsNoTracking().ToList();
+            log.Info("Inventory obtained");
+            return InventoryHasLocation1;
+        }
+
+        public MenuPreBuilt GetMenuPreBuilt(int NewItem)
+        {
+            log.Info("Obtaining single location from location id");
+            return _db.MenuPreBuilt.AsNoTracking().First(l => l.Id == NewItem);
+        }
+
+        public IEnumerable<MenuPreBuilt> GetPreMenuByID()
+        {
+            log.Info("Attempting to get inventory by MenuPreBuilt id");
+            List<MenuPreBuilt> MenuPre = _db.MenuPreBuilt.AsNoTracking().ToList();
+            log.Info("Inventory retreived");
+            return MenuPre;
+        }
+
+        public IEnumerable<MenuPreBuilt> GetAllMenuPreBuilt()
+        {
+            log.Info("Attempting to get MenuPreBuilt");
+            List<MenuPreBuilt> MenuPre = _db.MenuPreBuilt.AsNoTracking().ToList();
+            log.Info("Inventory retreived");
+            return MenuPre;
+        }
+
+
+
+
+
+
     }
 }
