@@ -99,7 +99,7 @@ namespace XUnitTestZVRPub.API
                 Id = 3,
                 IngredientName = "Cheese",
                 IngredientType = "Dairy",
-                Price = 1.00M
+                Price = 0.00M
             };
             Inventory inventory4 = new Inventory
             {
@@ -117,16 +117,16 @@ namespace XUnitTestZVRPub.API
             };
 
             var repoMock = new Mock<IZVRPubRepository>();
-            repoMock.Setup(c => c.GetInventoriesByName("Coke")).Returns(inventory4);
+            repoMock.Setup(c => c.GetInventoriesByName("cheese")).Returns(inventory3);
 
             var controller = new InventoryController(repoMock.Object);
             var result = controller.Get("Coke");
 
             Assert.NotNull(result.Result);
-            Assert.Same(inventory4, result.Result);
+            Assert.Same(inventory3, result.Result);
             Assert.NotSame(inventory1, result.Result);
             Assert.NotSame(inventory2, result.Result);
-            Assert.NotSame(inventory3, result.Result);
+            Assert.NotSame(inventory4, result.Result);
             Assert.NotSame(inventory5, result.Result);
         }
     }
