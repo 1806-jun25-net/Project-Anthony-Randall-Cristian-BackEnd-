@@ -41,7 +41,7 @@ namespace ZVRPub.Repository
         IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationId(int id);
 
 
-        void EditInventoryAsync(InventoryHasLocation inventory);
+        Task EditInventoryAsync(InventoryHasLocation inventory);
 
 
         Inventory GetInventoryByNameOfProduct(string np);
@@ -78,7 +78,7 @@ namespace ZVRPub.Repository
         Task AddCustomeOrderHasInventroy(MenuCustomHasIventory MCHasInv);
 
         Task AddPrebuiltOrderHasInventroy(MenuPreBuiltHasInventory MPHasInv);
-        
+
         void Save();
 
         void UpdatePreBuiltMenu(string v1, int v2);
@@ -91,18 +91,7 @@ namespace ZVRPub.Repository
         MenuPreBuilt GetMenuPreBuilt(int NewItem);
         IEnumerable<MenuPreBuilt> GetAllMenuPreBuilt();
         IEnumerable<MenuPreBuilt> GetPreMenuByID();
-
-
-
-
-
-
-
-
-
-
-
-
+       Task<InventoryHasLocation> getInventroyByTwoID(int locId, int invid);
     }
 }
 
