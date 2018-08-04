@@ -21,7 +21,7 @@ namespace ZVRPub.Repository
             _db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-        #region Users
+      
         public IEnumerable<Users> GetUsers()
         {
             log.Info("Obtaining all users from database");
@@ -39,7 +39,7 @@ namespace ZVRPub.Repository
                 await _db.SaveChangesAsync();
                 log.Info("User added to database");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.Info("Exception thrown");
                 log.Info(ex.Message);
@@ -63,7 +63,7 @@ namespace ZVRPub.Repository
 
             var token = _db.Users.AsNoTracking().FirstOrDefault(u => u.Username.ToLower().Equals(CheckName.ToLower()));
 
-            if(token != null)
+            if (token != null)
             {
                 UsernameTaken = true;
             }
@@ -71,15 +71,7 @@ namespace ZVRPub.Repository
             return UsernameTaken;
         }
 
-        public Users GetUserByUserById(int id)
-        {
-            log.Info("Retreiving user from database with given username");
-            return _db.Users.AsNoTracking().FirstOrDefault(u => u.UserId.Equals(id));
-        }
-
-        #endregion
-
-        #region Locations
+       
 
         public IEnumerable<Locations> GetLocations()
         {
@@ -97,8 +89,8 @@ namespace ZVRPub.Repository
                 await _db.AddAsync(loc);
                 await _db.SaveChangesAsync();
             }
-            
-            catch(Exception ex)
+
+            catch (Exception ex)
             {
                 log.Info("Exception thrown");
                 log.Info(ex.Message);
@@ -119,9 +111,7 @@ namespace ZVRPub.Repository
             return _db.Locations.AsNoTracking().First(l => l.City == city);
         }
 
-        #endregion
-
-        #region Orders
+        
 
         public IEnumerable<Orders> GetOrders()
         {
@@ -149,7 +139,7 @@ namespace ZVRPub.Repository
             return OrderList;
         }
 
-        public async void AddOrderAsync(Orders NewOrder)
+        public async Task AddOrderAsync(Orders NewOrder)
         {
             try
             {
@@ -159,7 +149,7 @@ namespace ZVRPub.Repository
                 log.Info("Order added");
             }
 
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.Info("Exception thrown");
                 log.Info(ex.Message);
@@ -167,26 +157,13 @@ namespace ZVRPub.Repository
             }
         }
 
-        #endregion
-
-        #region InventoryHasLocation
-
-        
+       
 
         public IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationId(int id)
         {
             log.Info("Attempting to get inventory by location id");
             List<InventoryHasLocation> InventoryList = _db.InventoryHasLocation.AsNoTracking().Where(i => i.LocationId == id).ToList();
             log.Info("Inventory retreived");
-            return InventoryList;
-        }
-
-        public IEnumerable<InventoryHasLocation> GetLocationInventoryByLocationCityID(int id)
-        {
-            log.Info("Attempting to get inventory by location id");
-            List<InventoryHasLocation> InventoryList = _db.InventoryHasLocation.AsNoTracking().Where(i => i.LocationId == id).ToList();
-            log.Info("Inventory retreived");
-            
             return InventoryList;
         }
 
@@ -199,31 +176,6 @@ namespace ZVRPub.Repository
                 await _db.SaveChangesAsync();
                 log.Info("Inventory updated");
             }
-            
-            catch(Exception ex)
-            {
-                log.Info("Exception thrown");
-                log.Info(ex.Message);
-                log.Info(ex.StackTrace);
-            }
-        }
-
-        public InventoryHasLocation invHasLoc(int id, int qty)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task InventoryHasLocationUpdateQTYAsync(int idLocation, int idInventory)
-        {
-            var allInventoryLoc = _db.InventoryHasLocation.AsNoTracking().FirstOrDefault(u => u.LocationId.Equals(idLocation) && u.InventoryId.Equals(idInventory));
-            allInventoryLoc.Quantity -= 1;
-            try
-            {
-                log.Info("Attempting to edit inventory");
-                _db.Update(allInventoryLoc);
-                await _db.SaveChangesAsync();
-                log.Info("Inventory updated");
-            }
 
             catch (Exception ex)
             {
@@ -233,9 +185,8 @@ namespace ZVRPub.Repository
             }
         }
 
-        #endregion
 
-        #region Inventory
+        
 
         //Inventory Table.
         public IEnumerable<Inventory> GetInventories()
@@ -261,7 +212,7 @@ namespace ZVRPub.Repository
                 log.Info("Item added");
             }
 
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.Info("Exception thrown");
                 log.Info(ex.Message);
@@ -269,19 +220,16 @@ namespace ZVRPub.Repository
             }
         }
 
-        //Task  IZVRPubRepository.AddOrderAsync(Orders NewOrder)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
+      
         public async Task addPreMenuOrder(MenuPrebuiltHasOrders menu)
         {
             await _db.MenuPrebuiltHasOrders.AddAsync(menu);
+            await _db.SaveChangesAsync();
         }
 
         public Orders FindOrdersByDate(DateTime DO)
         {
-            return GetOrders().FirstOrDefault(x => x.OrderTime == DO);
+            return _db.Orders.FirstOrDefault(x => x.OrderTime.ToLongTimeString().Equals(DO.ToLongTimeString()));
         }
 
         public IEnumerable<InventoryHasLocation> getLocationInv()
@@ -298,43 +246,22 @@ namespace ZVRPub.Repository
         {
             throw new NotImplementedException();
         }
-       
+
         public void UpdatePreBuiltMenu(string v1, int v2)
         {
             throw new NotImplementedException();
         }
 
-        #endregion
-
-        #region LocationOrderProcess
-
-        #endregion
-
-        #region MenuCustom
-
-        #endregion
-
-        #region MenuCustomHasInventory
-
-        #endregion
-
-        #region MenuPreBuilt
-
-        #endregion
-
-        #region MenuPreBuiltHasInventory
-
-        #endregion
-
-        #region MenuPreBuiltHasOrders
+        
         public async Task addPremadeItemInOrder(int OrderId, int PreID)
         {
             var Pre = new MenuPrebuiltHasOrders()
             {
-                OrdersId = OrderId, 
+                OrdersId = OrderId,
                 MenuPreBuildId = PreID
             };
             await _db.MenuPrebuiltHasOrders.AddAsync(Pre);
+            await _db.SaveChangesAsync();
         }
 
         public IEnumerable<MenuPrebuiltHasOrders> GetMenuPreBuiltHasOrders()
@@ -345,60 +272,39 @@ namespace ZVRPub.Repository
             return MenuPrebuiltHasOrders;
         }
 
-        public IEnumerable<InventoryHasLocation> GetAllLocationInventoryByLocation()
+
+        public MenuPreBuilt GetPreMenuByNameOfProduct(string np){
+
+            return _db.MenuPreBuilt.FirstOrDefault(o => o.NameOfMenu.ToLower().Equals( np.ToLower()));
+            }
+
+        public Orders FindLastOrderOfUserAsync(int userId) { return _db.Orders.AsNoTracking().LastOrDefault(u => u.UserId == userId); }
+
+        public async Task addCustomOrder(MenuCustom MC)
         {
-            log.Info("Obtaining all inventory has location from database");
-            List<InventoryHasLocation> InventoryHasLocation1 = _db.InventoryHasLocation.AsNoTracking().ToList();
-            log.Info("Inventory obtained");
-            return InventoryHasLocation1;
+            await _db.MenuCustom.AddAsync(MC);
+            await _db.SaveChangesAsync();
         }
 
-        public MenuPreBuilt GetMenuPreBuilt(int NewItem)
+        public async Task AddCustomeOrderHasInventroy(MenuCustomHasIventory MCHasInv)
         {
-            log.Info("Obtaining single location from location id");
-            return _db.MenuPreBuilt.AsNoTracking().First(l => l.Id == NewItem);
+            await _db.MenuCustomHasIventory.AddAsync(MCHasInv);
+            await _db.SaveChangesAsync();
+        }
+        public async Task AddPrebuiltOrderHasInventroy(MenuPreBuiltHasInventory MPHasInv)
+        {
+            await _db.MenuPreBuiltHasInventory.AddAsync(MPHasInv);
+            await _db.SaveChangesAsync();
         }
 
-        public IEnumerable<MenuPreBuilt> GetPreMenuByID()
+        public Inventory GetInventoryByNameOfProduct(string np)
         {
-            log.Info("Attempting to get inventory by MenuPreBuilt id");
-            List<MenuPreBuilt> MenuPre = _db.MenuPreBuilt.AsNoTracking().ToList();
-            log.Info("Inventory retreived");
-            return MenuPre;
+            return _db.Inventory.FirstOrDefault(o => o.IngredientName.ToLower().Equals(np.ToLower()));
         }
 
-        public IEnumerable<MenuPreBuilt> GetAllMenuPreBuilt()
+        public MenuCustom getLastCustom(string CBurger)
         {
-            log.Info("Attempting to get MenuPreBuilt");
-            List<MenuPreBuilt> MenuPre = _db.MenuPreBuilt.AsNoTracking().ToList();
-            log.Info("Inventory retreived");
-            return MenuPre;
+            return _db.MenuCustom.LastOrDefault(o => o.NameOfCustomMenu.ToLower().Equals(CBurger.ToLower()));
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        #endregion
-
-
-
-
-
-
-
-
     }
 }

@@ -15,6 +15,7 @@ using Microsoft.Extensions.Options;
 using NLog;
 using ZVRPub.Repository;
 using ZVRPub.Scaffold;
+using Microsoft.AspNetCore.Cors;
 
 namespace ZVRPub.API
 {
@@ -99,6 +100,21 @@ namespace ZVRPub.API
             services.AddDbContext<IdentityDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ZVRPubIdentity"),
                     b => b.MigrationsAssembly("ZVRPub.API")));
+
+            services.AddCors(
+            //    options =>
+            //{
+            //    options.AddPolicy("AllowAll",
+            //        builder =>
+            //        {
+            //            builder
+            //            .AllowAnyOrigin()
+            //            .AllowAnyMethod()
+            //            .AllowAnyHeader()
+            //            .AllowCredentials();
+            //        });
+            //}
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -110,6 +126,13 @@ namespace ZVRPub.API
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin()
+                    .AllowCredentials();
+            });
             app.UseAuthentication();
 
             app.UseSwagger();
@@ -118,6 +141,7 @@ namespace ZVRPub.API
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
+
 
 
             app.UseMvc();

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
+using ZVRPub.Library.Model;
 using ZVRPub.Repository;
 using ZVRPub.Scaffold;
 
@@ -40,8 +41,17 @@ namespace ZVRPub.API.Controllers
 
         // POST: api/MenuPreBuiltHaasOrders
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task PostAsync(MHO mHO)
         {
+            var o = Repo.FindOrdersByDate(mHO.OrderTime);
+            var m = Repo.GetPreMenuByNameOfProduct(mHO.NameOfProduct);
+            var Menu = new MenuPrebuiltHasOrders
+            {
+               OrdersId = o.OrderId,
+               MenuPreBuildId = m.Id
+            };
+           await Repo.addPreMenuOrder(Menu);
+           
         }
 
         // PUT: api/MenuPreBuiltHaasOrders/5
