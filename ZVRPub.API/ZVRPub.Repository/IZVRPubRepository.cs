@@ -21,7 +21,8 @@ namespace ZVRPub.Repository
         IEnumerable<InventoryHasLocation> GetAllLocationInventoryByLocation();
         IEnumerable<MenuPreBuilt> GetAllMenuPreBuilt();
         IEnumerable<Inventory> GetInventories();
-        Task<Inventory> GetInventoriesByName(string ingredient);
+        Task<Inventory> GetInventoriesByNameAsync(string ingredient);
+        Inventory GetInventoriesByName(string ingredient);
         Inventory GetInventoryByNameOfProduct(string np);
         Task<MenuCustom> getLastCustom(string CBurger);
         Locations GetLocationByCity(string city);

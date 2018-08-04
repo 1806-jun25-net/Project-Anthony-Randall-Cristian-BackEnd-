@@ -196,10 +196,15 @@ namespace ZVRPub.Repository
             log.Info("Inventories obtained");
             return InventoryList;
         }
-        public async Task<Inventory> GetInventoriesByName(string ingredient)
+        public async Task<Inventory> GetInventoriesByNameAsync(string ingredient)
         {
             log.Info("Obtaining ingredient with given name");
             return await  _db.Inventory.AsNoTracking().FirstOrDefaultAsync(u => u.IngredientName.ToLower().Equals(ingredient.ToLower()));
+        }
+        public Inventory GetInventoriesByName(string ingredient)
+        {
+            log.Info("Obtaining ingredient with given name");
+            return  _db.Inventory.AsNoTracking().FirstOrDefault(u => u.IngredientName.ToLower().Equals(ingredient.ToLower()));
         }
         //Inventory SaveChanges.
         public async void AddInventoryItem(Inventory NewItem)
