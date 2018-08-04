@@ -82,12 +82,12 @@ namespace ZVRPub.API.Controllers
             //items into order
             Orders LastOrderOfUser = Repo.FindLastOrderOfUserAsync(u.UserId);
 
-            await addPreMadeItem(value.burger, value.QuantityOfBurger, "Burger", LastOrderOfUser.OrderId);
+            await addPreMadeItem(value.burger, value.QuantityOfBurger, "Burger", LastOrderOfUser.OrderId, l.Id);
            
-            await addPreMadeItem(value.CockTail, value.QuantityCocktail, "Cocktail", LastOrderOfUser.OrderId);
-            await addPreMadeItem(value.Draft_Beer, value.QuantityDraft_Beer, "Draft Beer", LastOrderOfUser.OrderId);
-            await addPreMadeItem(value.Taco, value.QuantityTaco, "Taco", LastOrderOfUser.OrderId);
-            await addPreMadeItem(value.wrap, value.QuantityWrap, "Wrap", LastOrderOfUser.OrderId);
+            await addPreMadeItem(value.CockTail, value.QuantityCocktail, "Cocktail", LastOrderOfUser.OrderId, l.Id);
+            await addPreMadeItem(value.Draft_Beer, value.QuantityDraft_Beer, "Draft Beer", LastOrderOfUser.OrderId, l.Id);
+            await addPreMadeItem(value.Taco, value.QuantityTaco, "Taco", LastOrderOfUser.OrderId, l.Id);
+            await addPreMadeItem(value.wrap, value.QuantityWrap, "Wrap", LastOrderOfUser.OrderId, l.Id);
             //items into order 
             if (value.CustomBurgerYes)
             {
@@ -108,6 +108,14 @@ namespace ZVRPub.API.Controllers
                await CustomUsesInventory(cb.Id, Inv1.Id);
                await CustomUsesInventory(cb.Id, Inv2.Id);
                await CustomUsesInventory(cb.Id, Inv3.Id);
+                await addinv(l.Id, buns.Id);
+                await addinv(l.Id, patties.Id);
+                await addinv(l.Id, cheese.Id);
+                await addinv(l.Id, Inv.Id);
+                await addinv(l.Id, Inv1.Id);
+                await addinv(l.Id, Inv2.Id);
+                await addinv(l.Id, Inv3.Id);
+
             }
                
 
@@ -115,8 +123,14 @@ namespace ZVRPub.API.Controllers
 
         }
 
+        public async Task addinv(int locId, int invid)
+        {
+            var lhi = await Repo.getInventroyByTwoID(locId, invid);
+            lhi.Quantity = lhi.Quantity - 1;
+            await Repo.EditInventoryAsync(lhi);
+        }
         
-        public async Task addPreMadeItem(bool Item, int qty, string nameOfProduct, int orderid)
+        public async Task addPreMadeItem(bool Item, int qty, string nameOfProduct, int orderid, int locid)
         {
            var addPreMadeItem  = await Repo.GetPreMenuByNameOfProduct(nameOfProduct);
             if (Item)
@@ -124,42 +138,44 @@ namespace ZVRPub.API.Controllers
                 for (int i = 0; i< qty; i++)
                 {
                    await  Repo.addPremadeItemInOrder(orderid, addPreMadeItem.Id);
-                    await updatePreMadeIvn(addPreMadeItem.Id, addPreMadeItem.NameOfMenu);
+                   await updatePreMadeIvn(addPreMadeItem.Id, addPreMadeItem.NameOfMenu, locid);
+
 
                 }
             }
            
         }
        
-        public async Task updatePreMadeIvn(int PremadeId,  string menu)
+        public async Task updatePreMadeIvn(int PremadeId,  string menu, int locId)
         {
             if (menu.ToLower().Equals("wrap"))
             {
-                await somesortofthing("cheese", PremadeId);
-                await somesortofthing("buns", PremadeId);
-                await somesortofthing("Lettuce", PremadeId);
-                await somesortofthing("Tomato", PremadeId);
+                await somesortofthing("cheese", PremadeId, locId);
+                await somesortofthing("buns", PremadeId, locId);
+                await somesortofthing("Lettuce", PremadeId, locId);
+                await somesortofthing("Tomato", PremadeId, locId);
+
             }
             if (menu.ToLower().Equals("burger"))
             {
-                await somesortofthing("cheese", PremadeId);
-                await somesortofthing("buns", PremadeId);
-                await somesortofthing("Lettuce", PremadeId);
-                await somesortofthing("Tomato", PremadeId);
+                await somesortofthing("cheese", PremadeId, locId);
+                await somesortofthing("buns", PremadeId, locId);
+                await somesortofthing("Lettuce", PremadeId, locId);
+                await somesortofthing("Tomato", PremadeId, locId);
                
             }
             if (menu.ToLower().Equals("taco"))
             {
-                await somesortofthing("cheese", PremadeId);
-                await somesortofthing("buns", PremadeId);
-                await somesortofthing("Lettuce", PremadeId);
-                await somesortofthing("Tomato", PremadeId);
+                await somesortofthing("cheese", PremadeId, locId);
+                await somesortofthing("buns", PremadeId, locId);
+                await somesortofthing("Lettuce", PremadeId, locId);
+                await somesortofthing("Tomato", PremadeId, locId);
                 
             }
        
         }
 
-        public async Task somesortofthing(string item, int PremadeId)
+        public async Task somesortofthing(string item, int PremadeId, int loc)
         {
             var inc = Repo.GetInventoriesByName(item);
             var invhaspre = new MenuPreBuiltHasInventory()
@@ -168,6 +184,7 @@ namespace ZVRPub.API.Controllers
                 MenuPreBuildId = PremadeId
 
             };
+            await addinv(loc, inc.Id);
            await Repo.AddPrebuiltOrderHasInventroy(invhaspre);
         }
         public async Task CustomUsesInventory(int CustomId, int InvId)
