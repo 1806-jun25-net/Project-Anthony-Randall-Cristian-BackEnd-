@@ -38,7 +38,7 @@ namespace ZVRPub.API.Controllers
             var loc = Repo.GetLocations().ToList();
             var userId = user.UserId;
             var orderList = Repo.GetOrders().Where(x => x.UserId == userId).ToList();
-
+            var count = orderList.Count();
             var preBuiltList = Repo.GetMenuPreBuiltHasOrders();
             var getPreOrder = new List<MenuPrebuiltHasOrders>();
             foreach (var item in orderList)
@@ -54,9 +54,16 @@ namespace ZVRPub.API.Controllers
             }
 
 
+            #region 
+            decimal[] Price = new decimal[count];
+            for (int i = 0; i < count; i++)
+            {
+                Random rnd = new Random();
+                decimal number = rnd.Next(1, 13);
+                Price[i] = number;
+            }
+            #endregion
 
-
-            
             var getPreOrderMenu = Repo.GetAllMenuPreBuilt().ToList();
 
 
@@ -79,7 +86,9 @@ namespace ZVRPub.API.Controllers
                 Inventories = inventory2,
                 Order = order2,
                 PreBuilt = PreBuilt,
-                PreBuiltHasOrder = PreOr
+                PreBuiltHasOrder = PreOr,
+                Price = Price
+                
 
             };
 
