@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZVRPub.Library.Model;
 using ZVRPub.Scaffold;
 
 namespace ZVRPub.Repository
@@ -225,7 +226,12 @@ namespace ZVRPub.Repository
             }
         }
 
-      
+        public string GetIngredientNameById(int id)
+        {
+            Inventory inv = _db.Inventory.AsNoTracking().FirstOrDefault(x => x.Id == id);
+            string ingredient = inv.IngredientName;
+            return ingredient;
+        }
         public async Task addPreMenuOrder(MenuPrebuiltHasOrders menu)
         {
             await _db.MenuPrebuiltHasOrders.AddAsync(menu);

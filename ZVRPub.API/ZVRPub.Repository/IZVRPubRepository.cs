@@ -20,6 +20,7 @@ namespace ZVRPub.Repository
         Task<Orders> FindLastOrderOfUserAsync(int userId);
         IEnumerable<InventoryHasLocation> GetAllLocationInventoryByLocation();
         IEnumerable<MenuPreBuilt> GetAllMenuPreBuilt();
+        string GetIngredientNameById(int id);
         IEnumerable<Inventory> GetInventories();
         Inventory GetInventoriesByName(string ingredient);
         Task<Inventory> GetInventoriesByNameAsync(string ingredient);
