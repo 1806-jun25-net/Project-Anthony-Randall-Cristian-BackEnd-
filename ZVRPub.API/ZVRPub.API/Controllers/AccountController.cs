@@ -150,7 +150,7 @@ namespace ZVRPub.API.Controllers
 
             log.Info("Creating user for non-identity database");
 
-            var permission = (input.IsAdmin == true);
+            var permission = (input.IsAdmin);
 
             Users u = new Users
             {

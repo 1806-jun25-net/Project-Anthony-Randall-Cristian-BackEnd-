@@ -59,12 +59,6 @@ namespace ZVRPub.API.Controllers
             return returnIngredients;
         }
 
-        // POST: api/InventoryHasLocation
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
         // PUT: api/InventoryHasLocation/5
         [HttpPut("{city}")]
         public async Task<ActionResult> Put([FromQuery]string city)
@@ -81,12 +75,6 @@ namespace ZVRPub.API.Controllers
             }
 
             return NoContent();
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

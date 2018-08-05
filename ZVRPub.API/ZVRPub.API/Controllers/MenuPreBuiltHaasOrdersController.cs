@@ -43,27 +43,13 @@ namespace ZVRPub.API.Controllers
         [HttpPost]
         public async Task PostAsync(MHO mHO)
         {
-          //  var o = Repo.FindOrdersByDate(mHO.OrderTime);
             var m = Repo.GetPreMenuByNameOfProduct(mHO.NameOfProduct);
             var Menu = new MenuPrebuiltHasOrders
             {
-              // OrdersId = o.OrderId,
                MenuPreBuildId = m.Id
             };
            await Repo.addPreMenuOrder(Menu);
            
-        }
-
-        // PUT: api/MenuPreBuiltHaasOrders/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

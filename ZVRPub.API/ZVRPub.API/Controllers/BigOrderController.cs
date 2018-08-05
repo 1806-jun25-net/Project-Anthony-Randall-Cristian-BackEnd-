@@ -66,7 +66,7 @@ namespace ZVRPub.API.Controllers
             //order bit
             Users u = Repo.GetUserByUsername(value.user);
             Locations l = Repo.GetLocationByCity(value.Location);
-            Orders o = new Orders();
+            Orders o;
             if (value.CustomBurgerYes)
             {
                  o = new Orders
@@ -222,17 +222,6 @@ namespace ZVRPub.API.Controllers
                 Quantity = Quantity
             };
            await Repo.AddPrebuiltOrderHasInventroy(menuPre);
-        }
-        // PUT: api/BigOrder/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

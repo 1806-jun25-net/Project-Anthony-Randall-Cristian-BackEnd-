@@ -38,7 +38,7 @@ namespace ZVRPub.API.Controllers
             var loc = Repo.GetLocations().ToList();
             var userId = user.UserId;
             var orderList = Repo.GetOrders().Where(x => x.UserId == userId).ToList();
-            var count = orderList.Count();
+            var count = orderList.Count;
             var preBuiltList = Repo.GetMenuPreBuiltHasOrders();
             var getPreOrder = new List<MenuPrebuiltHasOrders>();
             foreach (var item in orderList)
