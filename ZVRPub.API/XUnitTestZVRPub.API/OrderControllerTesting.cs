@@ -26,17 +26,7 @@ namespace XUnitTestZVRPub.API
 
 
             };
-            Orders order2 = new Orders
-            {
-
-                OrderId = 2,
-                OrderTime = DateTime.Parse("2018-08-03 14:49:01"),
-                LocationId = 1,
-                UserId = 5,
-                Cost = 19
-
-
-            };
+            
 
 
             var repoMock = new Mock<IZVRPubRepository>();
