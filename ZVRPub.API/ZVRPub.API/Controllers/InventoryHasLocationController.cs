@@ -67,7 +67,7 @@ namespace ZVRPub.API.Controllers
 
         // PUT: api/InventoryHasLocation/5
         [HttpPut("{city}")]
-        public async Task Put([FromQuery]string city)
+        public async Task<ActionResult> Put([FromQuery]string city)
         {
             Locations loc = Repo.GetLocationByCity(city);
 
@@ -79,6 +79,8 @@ namespace ZVRPub.API.Controllers
                 item.Quantity = 10;
                 await Repo.EditInventoryAsync(item);
             }
+
+            return NoContent();
         }
 
         // DELETE: api/ApiWithActions/5
