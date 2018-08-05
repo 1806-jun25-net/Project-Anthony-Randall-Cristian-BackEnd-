@@ -66,9 +66,19 @@ namespace ZVRPub.API.Controllers
         }
 
         // PUT: api/InventoryHasLocation/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{city}")]
+        public async Task Put([FromQuery]string city)
         {
+            Locations loc = Repo.GetLocationByCity(city);
+
+            List<InventoryHasLocation> ingredientsIDs = new List<InventoryHasLocation>();
+            ingredientsIDs.AddRange(Repo.GetLocationInventoryByLocationId(loc.Id));
+
+            foreach (var item in ingredientsIDs)
+            {
+                item.Quantity = 10;
+                await Repo.EditInventoryAsync(item);
+            }
         }
 
         // DELETE: api/ApiWithActions/5
