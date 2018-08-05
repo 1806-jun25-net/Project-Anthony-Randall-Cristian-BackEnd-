@@ -14,6 +14,6 @@ namespace ZVRPub.API.ModelsNeeded
         public IEnumerable<MenuPrebuiltHasOrdersModel> PreBuiltHasOrder { get; set; }
         public IEnumerable<InventoryModel> Inventories { get; set; }
         public IEnumerable<LocationModel> Location { get; set; }
-        public decimal[] Price { get;set }
+        public decimal[] Price { get; set; }
     }
 }
