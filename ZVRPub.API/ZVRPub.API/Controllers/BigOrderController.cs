@@ -66,15 +66,29 @@ namespace ZVRPub.API.Controllers
             //order bit
             Users u = Repo.GetUserByUsername(value.user);
             Locations l = Repo.GetLocationByCity(value.Location);
-
-            Orders o = new Orders
+            Orders o = new Orders();
+            if (value.CustomBurgerYes)
             {
-                UserId = u.UserId,
-                LocationId = l.Id,
-                OrderTime = value.OrderTime,
-
-            };
-
+                 o = new Orders
+                {
+                    UserId = u.UserId,
+                    LocationId = l.Id,
+                    OrderTime = value.OrderTime,
+                    Cost = 5 * (value.QuantityBurger + value.QuantityCocktail + value.QuantityDraft_Beer + value.QuantityOfBurger + value.QuantityTaco + value.QuantityWrap + 11)
+                };
+            }
+            else
+            {
+                 o = new Orders
+                {
+                    UserId = u.UserId,
+                    LocationId = l.Id,
+                    OrderTime = value.OrderTime,
+                    Cost = 5 * (value.QuantityBurger + value.QuantityCocktail + value.QuantityDraft_Beer + value.QuantityOfBurger + value.QuantityTaco + value.QuantityWrap)
+                };
+            }
+           
+        
             await Repo.AddOrderAsync(o);
 
             //order bit
