@@ -50,6 +50,37 @@ namespace XUnitTestZVRPub.API
             Assert.Same(location1, result.Value[0]);
         }
         
+        [Fact]
+        public void LocationControllerShouldReturnACity()
+        {
+            Locations location1 = new Locations
+            {
+                Id = 1,
+                City = "Somehwere",
+                PostalCode = "something",
+                States = "Somewhere",
+                StreetAddress = "somewhere"
+            };
+            var location2 = new Locations
+            {
+                Id = 2,
+                City = "Somehwere1",
+                PostalCode = "something1",
+                States = "Somewhere1",
+                StreetAddress = "somewhere1"
+
+
+            };
+
+            string city = "Somehwere";
+            int id = 1;
+            var repoMock = new Mock<IZVRPubRepository>();
+            repoMock.Setup(c => c.GetLocationByCity(city)).Returns(location1);
+
+            var controller = new LocationsController(repoMock.Object);
+            var result = controller.Get(id);
+            
+        }
 
     }
 }

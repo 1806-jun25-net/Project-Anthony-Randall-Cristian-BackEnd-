@@ -19,7 +19,6 @@ namespace ZVRPub.API.Controllers
         private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
         private readonly IZVRPubRepository Repo;
-        private SignInManager<IdentityUser> _signInManager { get; }
 
         public UserHaasPreBuildMenuAndInvController(IZVRPubRepository repo)
         {

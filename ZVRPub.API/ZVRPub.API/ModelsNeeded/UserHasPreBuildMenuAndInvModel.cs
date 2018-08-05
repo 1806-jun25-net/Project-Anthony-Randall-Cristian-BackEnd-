@@ -10,7 +10,6 @@ namespace ZVRPub.API.ModelsNeeded
         public IEnumerable<OrderModel> Order { get; set; }
         public string User { get; set; }
         public IEnumerable<MenuPreBuiltModel> PreBuilt { get; set; }
-        //public ICollection<MenuPreBuiltHasInventoryModel> PreBuiltHasInv { get; set; }
         public IEnumerable<MenuPrebuiltHasOrdersModel> PreBuiltHasOrder { get; set; }
         public IEnumerable<InventoryModel> Inventories { get; set; }
         public IEnumerable<LocationModel> Location { get; set; }

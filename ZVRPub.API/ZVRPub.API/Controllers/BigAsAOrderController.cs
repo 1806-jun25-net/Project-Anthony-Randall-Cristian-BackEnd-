@@ -24,7 +24,6 @@ namespace ZVRPub.API.Controllers
         private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
         private readonly IZVRPubRepository Repo;
-        SignInManager<IdentityUser> _signInManager { get; }
 
 
 
