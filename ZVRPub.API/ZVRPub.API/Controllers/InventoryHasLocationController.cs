@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NLog;
+using ZVRPub.Library.Model;
 using ZVRPub.Repository;
 using ZVRPub.Scaffold;
 
@@ -35,10 +36,27 @@ namespace ZVRPub.API.Controllers
 
         // GET: api/InventoryHasLocation/5
         [HttpGet("{city}", Name = "GetInventoryHasLocation")]
-        public IEnumerable<InventoryHasLocation> Get([FromQuery]string city)
+        public IEnumerable<IngredientInformationAndLocation> Get([FromQuery]string city)
         {
             Locations loc = Repo.GetLocationByCity(city);
-            return Repo.GetLocationInventoryByLocationId(loc.Id);
+
+            List<InventoryHasLocation> ingredientsIDs = new List<InventoryHasLocation> ();
+            ingredientsIDs.AddRange(Repo.GetLocationInventoryByLocationId(loc.Id));
+
+            List<IngredientInformationAndLocation> returnIngredients = new List<IngredientInformationAndLocation>();
+            foreach (var item in ingredientsIDs)
+            {
+                returnIngredients.Add(new IngredientInformationAndLocation
+                {
+                    Id = item.Id,
+                    LocationId = item.LocationId,
+                    InventoryId = item.InventoryId,
+                    Quantity = item.Quantity,
+                    IngredientName = Repo.GetIngredientNameById(item.InventoryId)
+                });
+            }
+
+            return returnIngredients;
         }
 
         // POST: api/InventoryHasLocation
