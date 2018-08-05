@@ -7,7 +7,7 @@ namespace ZVRPub.Library.BL
 {
     public class BusinessLogic
     {
-        private readonly IZVRPubRepository Repo;
+        
 
         public int years(DateTime start, DateTime end)
         {
@@ -35,18 +35,18 @@ namespace ZVRPub.Library.BL
             switch (Today.DayOfWeek)
             {
                 case DayOfWeek.Monday:
-                  ///  Repo.UpdatePreBuiltMenu("Wrap", 4);
+                  
                     break;
 
                 case DayOfWeek.Tuesday:
-                  //  Repo.UpdatePreBuiltMenu("Tacos", 1);
+                  
                     break;
 
                 case DayOfWeek.Wednesday:
-                   // Repo.UpdatePreBuiltMenu("Burger", 5);
+                  
                     break;
                 case DayOfWeek.Friday:
-                    //all drinks half off
+                    
                     break;
                 
             }

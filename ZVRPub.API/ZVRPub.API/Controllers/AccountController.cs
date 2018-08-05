@@ -30,30 +30,12 @@ namespace ZVRPub.API.Controllers
 
         public AccountController(SignInManager<IdentityUser> signInManager, IZVRPubRepository repo)
         {
-            //log.Info("Creating instance of account controller");
+            
             _signInManager = signInManager;
             Repo = repo;
         }
 
-        //[HttpPost]
-        //[ProducesResponseType(204)]
-        //[ProducesResponseType(403)]
-        //public async Task<ActionResult> Login(string username, string password)
-        //{
-        //    User input = new User { Username = username, UserPassword = password };
-        //    log.Info("Beginning login");
-        //    var result = await _signInManager.PasswordSignInAsync(input.Username, input.UserPassword,
-        //        isPersistent: false, lockoutOnFailure: false);
-
-        //    if (!result.Succeeded)
-        //    {
-        //        log.Info("HTTP Status code 403 - user unable to perform desired action");
-        //        return StatusCode(403); // Forbidden
-        //    }
-
-        //    log.Info("HTTP status code 204 - logging user in");
-        //    return NoContent();
-        //}
+        
 
         [HttpPost]
         [ProducesResponseType(204)]
@@ -193,7 +175,6 @@ namespace ZVRPub.API.Controllers
         [ProducesResponseType(400)]
         public ActionResult UserIsAdmin()
         {
-            var something = User.Identity;
             return NoContent();
         }
     }
