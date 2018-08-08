@@ -7,6 +7,7 @@ COPY ZVRPub.API/*.csproj ./ZVRPub.API/
 COPY ZVRPub.Library/*.csproj ./ZVRPub.Library/
 COPY ZVRPub.Repository/*.csproj ./ZVRPub.Repository/
 COPY ZVRPub.Scaffold/*.csproj ./ZVRPub.Scaffold/
+COPY XUnitTestZVRPub.API/*.csproj ./XUnitTestZVRPub.API/
 RUN dotnet restore
 
 # copy everything else and build app
